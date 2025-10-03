@@ -1,0 +1,12 @@
+{
+	"name":        "loggers-renderer",
+	"$schema":     "../../../node_modules/nx/schemas/project-schema.json",
+	"sourceRoot":  "libs/loggers/renderer/src",
+	"projectType": "library",
+	"tags":        [
+		"scope:renderer",
+		"type:loggers"
+	],
+	"// targets":  "to see all targets run: nx show project loggers-renderer --web",
+	"targets":     {}
+}

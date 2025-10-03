@@ -1,0 +1,16 @@
+{
+	"name":        "feature-initial-setup",
+	"$schema":     "../../../node_modules/nx/schemas/project-schema.json",
+	"sourceRoot":  "libs/features/initial-setup/src",
+	"prefix":      "nim",
+	"projectType": "library",
+	"tags":        [
+		"scope:renderer",
+		"type:angular"
+	],
+	"targets":     {
+		"lint": {
+			"executor": "@nx/eslint:lint"
+		}
+	}
+}

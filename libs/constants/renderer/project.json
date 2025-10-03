@@ -1,0 +1,21 @@
+{
+  "name": "constants-renderer",
+  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/constants/renderer/src",
+  "projectType": "library",
+  "tags": ["scope:renderer type:constants"],
+  "targets": {
+    "build": {
+      "executor": "@nx/esbuild:esbuild",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/libs/constants/renderer",
+        "main": "libs/constants/renderer/src/index.ts",
+        "tsConfig": "libs/constants/renderer/tsconfig.lib.json",
+        "assets": ["libs/constants/renderer/*.md"],
+        "format": ["cjs"],
+        "generatePackageJson": true
+      }
+    }
+  }
+}

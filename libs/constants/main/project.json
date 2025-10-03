@@ -1,0 +1,21 @@
+{
+  "name": "constants-main",
+  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/constants/main/src",
+  "projectType": "library",
+  "tags": ["scope:main type:constants"],
+  "targets": {
+    "build": {
+      "executor": "@nx/esbuild:esbuild",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/libs/constants/main",
+        "main": "libs/constants/main/src/index.ts",
+        "tsConfig": "libs/constants/main/tsconfig.lib.json",
+        "assets": ["libs/constants/main/*.md"],
+        "format": ["cjs"],
+        "generatePackageJson": true
+      }
+    }
+  }
+}

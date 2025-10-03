@@ -1,0 +1,21 @@
+{
+  "name": "busses",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/busses/src",
+  "projectType": "library",
+  "tags": ["scope:main type:busses"],
+  "targets": {
+    "build": {
+      "executor": "@nx/esbuild:esbuild",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/libs/busses",
+        "main": "libs/busses/src/index.ts",
+        "tsConfig": "libs/busses/tsconfig.lib.json",
+        "assets": ["libs/busses/*.md"],
+        "format": ["cjs"],
+        "generatePackageJson": true
+      }
+    }
+  }
+}

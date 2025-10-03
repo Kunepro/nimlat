@@ -14,7 +14,20 @@
     "skipLibCheck": true,
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
-    "paths": {}
+    "paths": {
+      "@nimlat/busses": ["libs/busses/src/index.ts"],
+      "@nimlat/const/main/*": ["libs/constants/main/src/lib/*"],
+      "@nimlat/const/renderer/*": ["libs/constants/renderer/src/lib/*"],
+      "@nimlat/const/shared/*": ["libs/constants/shared/src/lib/*"],
+      "@nimlat/database": ["libs/database/src/index.ts"],
+      "@nimlat/feature/initial-setup": [
+        "libs/features/initial-setup/src/index.ts"
+      ],
+      "@nimlat/loggers-main": ["libs/loggers/main/src/index.ts"],
+      "@nimlat/loggers-renderer": ["libs/loggers/renderer/src/index.ts"],
+      "@nimlat/types/*": ["libs/types/src/lib/*"],
+      "@nimlat/utils": ["libs/utils/src/index.ts"]
+    }
   },
   "exclude": ["node_modules", "tmp"]
 }
