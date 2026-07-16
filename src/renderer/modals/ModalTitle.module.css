@@ -1,0 +1,6 @@
+.title {
+	font-size:      24px;
+	letter-spacing: 4px;
+	text-transform: uppercase;
+	color:          var(--text-color-heading);
+}

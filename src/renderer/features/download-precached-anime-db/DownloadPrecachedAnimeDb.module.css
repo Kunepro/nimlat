@@ -1,0 +1,29 @@
+.layout {
+	flex:       1;
+	min-height: 0;
+	background: transparent;
+}
+
+.content {
+	flex:       1;
+	min-height: 0;
+	display:         flex;
+	align-items:     center;
+	justify-content: center;
+	padding:         var(--space-xxl);
+}
+
+.contentWithHeader {
+	padding-top: var(--space-lg);
+}
+
+.card {
+	width:      min(720px, 96vw);
+	border:     var(--panel-border);
+	background: rgba(8, 16, 28, 0.96);
+	box-shadow: var(--modal-shadow);
+}
+
+.stack {
+	width: 100%;
+}

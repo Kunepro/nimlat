@@ -1,0 +1,16 @@
+.container {
+	margin-bottom: var(--space-md);
+}
+
+.inlineAction {
+	margin-bottom: 0;
+}
+
+.actionsOnly {
+	display:         flex;
+	justify-content: flex-end;
+}
+
+.tooltipButtonWrapper {
+	display: inline-flex;
+}

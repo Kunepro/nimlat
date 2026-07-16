@@ -1,0 +1,13 @@
+/* Plain links (e.g., AniList refs; AntD Links use colorLink token) */
+a {
+	color:           var(--text-color-links);
+	text-decoration: none;
+}
+
+a:hover {
+	color: var(--text-color-links-hover);
+}
+
+a:visited {
+	color: var(--text-color-links-visited);
+}

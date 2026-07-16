@@ -1,0 +1,39 @@
+.compactPanel {
+	display:        flex;
+	flex-direction: column;
+	gap:            var(--space-sm);
+	border:         var(--panel-border);
+	border-radius:  var(--border-radius-md);
+	background: var(--background-elevated);
+	padding:        var(--space-sm);
+	min-width:      0;
+}
+
+.titleRow {
+	display:               grid;
+	grid-template-columns: 88px minmax(180px, 260px) minmax(240px, 1fr);
+	gap:                   var(--space-sm);
+	align-items:           center;
+}
+
+.titleRow :global(.ant-select),
+.titleRow :global(.ant-input) {
+	min-width: 0;
+}
+
+.titleRow :global(.ant-select-selector),
+.titleRow :global(.ant-input) {
+	background: var(--background-color) !important;
+}
+
+.fieldLabel {
+	color:       var(--text-color-heading);
+	font-size:   var(--font-size-sm);
+	font-weight: 600;
+}
+
+@media (max-width: 800px) {
+	.titleRow {
+		grid-template-columns: 1fr;
+	}
+}

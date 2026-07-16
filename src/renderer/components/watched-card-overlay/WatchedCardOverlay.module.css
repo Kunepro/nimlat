@@ -1,0 +1,100 @@
+.overlay {
+	position:       absolute;
+	inset:          0;
+	z-index:        1;
+	pointer-events: none;
+	overflow:       hidden;
+	border-radius:  inherit;
+}
+
+.shader {
+	position:   absolute;
+	inset:      0;
+	background: radial-gradient(circle at 50% 42%, rgba(1, 3, 7, 0.18), rgba(0, 0, 0, 0.42) 72%),
+							linear-gradient(180deg, rgba(0, 1, 4, 0.2), rgba(0, 0, 0, 0.34));
+	box-shadow: inset 0 0 34px rgba(0, 0, 0, 0.58), inset 0 0 0 1px rgba(0, 255, 170, 0.05);
+}
+
+.redMark {
+	position:  absolute;
+	inset:     0;
+	filter:    drop-shadow(0 0 8px rgba(255, 34, 58, 0.72));
+	animation: watchedRedFlicker 1350ms steps(8, end) infinite;
+	animation-delay: var(--watched-red-delay, 0ms);
+}
+
+.redArm {
+	position:         absolute;
+	left:             50%;
+	top:              50%;
+	height:           3px;
+	border-radius:    999px;
+	background: linear-gradient(90deg, rgba(255, 43, 64, 0), #FF3046 12%, #FF7583 52%, #B30018 100%);
+	transform-origin: 0 50%;
+	box-shadow:       0 0 11px rgba(255, 20, 38, 0.8), 0 0 3px rgba(255, 210, 215, 0.78);
+}
+
+.portrait .redArm {
+	width: min(58%, 126px);
+}
+
+.portrait .redArmTopLeft {
+	transform: translate(-12px, -18px) rotate(235deg);
+}
+
+.portrait .redArmBottomRight {
+	transform: translate(12px, 18px) rotate(55deg);
+}
+
+.portrait .redArmTopRight {
+	transform: translate(12px, -18px) rotate(305deg);
+}
+
+.portrait .redArmBottomLeft {
+	transform: translate(-12px, 18px) rotate(125deg);
+}
+
+.landscape .redArm {
+	width: min(40%, 72px);
+}
+
+.landscape .redArmTopLeft {
+	transform: translate(-14px, -8px) rotate(209deg);
+}
+
+.landscape .redArmBottomRight {
+	transform: translate(14px, 8px) rotate(29deg);
+}
+
+.landscape .redArmTopRight {
+	transform: translate(14px, -8px) rotate(331deg);
+}
+
+.landscape .redArmBottomLeft {
+	transform: translate(-14px, 8px) rotate(151deg);
+}
+
+@keyframes watchedRedFlicker {
+	0%,
+	100% {
+		opacity: 0.86;
+	}
+	18% {
+		opacity: 0.5;
+	}
+	23% {
+		opacity: 0.96;
+	}
+	42% {
+		opacity: 0.68;
+	}
+	49% {
+		opacity: 0.92;
+	}
+	71% {
+		opacity: 0.54;
+	}
+	76% {
+		opacity: 0.98;
+	}
+}

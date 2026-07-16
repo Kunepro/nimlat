@@ -1,0 +1,55 @@
+.flex-center {
+	display:        flex;
+	align-items:    center;
+	justify-content: center;
+	flex-direction: column;
+	height:         100%;
+}
+
+.flex-start {
+	display:        flex;
+	align-items:    flex-start;
+	justify-content: flex-start;
+	flex-direction: column;
+	height:         100%;
+}
+
+.flex-between {
+	display:        flex;
+	align-items:    center;
+	justify-content: space-between;
+	flex-direction: column;
+	height:         100%;
+}
+
+.full-screen-v {
+	height: 100vh;
+}
+
+.full-width {
+	width: 100%;
+}
+
+.text-ellipsis {
+	overflow:    hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+
+.text-secondary {
+	color: var(--text-color-secondary);
+}
+
+.glow-title {
+	color: var(--glow-title-color);
+	text-shadow: 0 0 8px var(--glow-title-color), 0 0 16px var(--glow-title-color);
+	font-weight: bold;
+}
+
+.glow-blue {
+	box-shadow: 0 0 20px var(--neon-blue);
+}
+
+.glow-neon {
+	text-shadow: 0 0 8px var(--neon-purple), 0 0 16px var(--neon-blue);
+}

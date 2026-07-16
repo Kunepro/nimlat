@@ -1,0 +1,17 @@
+.modal :global(.ant-modal-header) {
+	background: transparent;
+	padding:    var(--space-lg) var(--space-xxl) var(--space-md) 0;
+}
+
+.modal :global(.ant-modal-close) {
+	inset-inline-end: var(--space-md);
+	top:              var(--space-md);
+	border-radius:    999px;
+	background:       rgba(6, 12, 22, 0.7);
+	border:           1px solid rgba(0, 213, 255, 0.35);
+	box-shadow:       0 0 12px rgba(0, 178, 255, 0.35);
+}
+
+.modal :global(.ant-modal-close:hover) {
+	background: rgba(10, 18, 28, 0.9);
+}

@@ -1,0 +1,63 @@
+.taxonomyPanel {
+	display:               grid;
+	grid-template-columns: repeat(2, minmax(0, 1fr));
+	align-items:           start;
+	gap:                   var(--space-xl);
+	padding:               var(--space-lg);
+	border:                1px solid var(--table-cell-border);
+	border-radius:         var(--border-radius-md);
+	background:            var(--background-elevated);
+	box-shadow:            var(--box-shadow-base);
+}
+
+.heading {
+	margin:         0;
+	color:          var(--text-color-heading);
+	font-size:      0.78rem;
+	font-weight:    700;
+	text-transform: uppercase;
+}
+
+.tagGroup {
+	display:        flex;
+	flex-direction: column;
+	gap:            var(--space-sm);
+	min-width:      0;
+}
+
+.tagList {
+	display:   flex;
+	flex-wrap: wrap;
+	gap:       var(--space-xs);
+	min-width: 0;
+}
+
+.filterTag {
+	cursor: pointer;
+}
+
+.tagList :global(.ant-tag) {
+	margin:        0;
+	border-color:  var(--table-cell-border);
+	border-radius: var(--border-radius-sm);
+	color:         var(--text-color-secondary);
+	background:    var(--background-layout);
+	font-size:     var(--font-size-sm);
+	line-height:   1.55;
+}
+
+.tagList :global(.ant-tag:hover) {
+	border-color: var(--neon-blue);
+	color:        var(--text-color);
+}
+
+.filterTag:focus-visible {
+	outline:        2px solid var(--color-primary);
+	outline-offset: 2px;
+}
+
+@media (max-width: 760px) {
+	.taxonomyPanel {
+		grid-template-columns: 1fr;
+	}
+}

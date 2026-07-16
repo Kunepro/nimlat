@@ -1,0 +1,11 @@
+.headerActions {
+	display:     inline-flex;
+	align-items: center;
+	gap:         var(--space-sm);
+	min-width:   min(420px, 42vw);
+}
+
+.searchInput {
+	min-width: 220px;
+	flex:      1 1 260px;
+}

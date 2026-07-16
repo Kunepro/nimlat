@@ -1,0 +1,58 @@
+.modal :global(.ant-modal-content) {
+	background: linear-gradient(160deg, rgba(12, 20, 34, 0.98), rgba(8, 14, 24, 0.96));
+	border:     var(--modal-border);
+	box-shadow: var(--modal-shadow);
+}
+
+.modal :global(.ant-modal-body) {
+	display:        flex;
+	flex-direction: column;
+	gap:            var(--space-lg);
+}
+
+.form {
+	display:        flex;
+	flex-direction: column;
+	gap:            var(--space-lg);
+}
+
+.previewSection {
+	display:        flex;
+	flex-direction: column;
+	gap:            var(--space-md);
+	padding:        var(--space-lg);
+	border:         var(--panel-dashed-border);
+	border-radius:  var(--border-radius-lg);
+	background:     var(--panel-muted-bg);
+}
+
+.previewImage {
+	width:         180px;
+	height:        100px;
+	object-fit:    cover;
+	border-radius: var(--border-radius);
+	border:        1px solid rgba(0, 213, 255, 0.25);
+	background:    var(--background-elevated);
+}
+
+.previewPlaceholder {
+	width:      100%;
+	min-height: 160px;
+	display:         flex;
+	align-items:     center;
+	justify-content: center;
+	gap:        var(--space-sm);
+	border-radius:   var(--border-radius);
+	border:          var(--panel-dashed-border);
+	background:      var(--background-elevated);
+	color:           var(--text-color-tertiary);
+	text-align:      center;
+}
+
+@media (max-width: 900px) {
+	.previewImage,
+	.previewPlaceholder {
+		width:  100%;
+		height: 180px;
+	}
+}

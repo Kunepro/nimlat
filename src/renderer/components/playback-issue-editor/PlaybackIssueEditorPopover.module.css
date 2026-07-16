@@ -1,0 +1,286 @@
+.content {
+	width:          min(420px, calc(100vw - (2 * var(--space-lg))));
+	display:        flex;
+	flex-direction: column;
+	gap:            var(--space-sm);
+}
+
+.triggerButton {
+	position:       relative;
+	overflow:       hidden;
+	border:         1px solid rgba(247, 211, 95, 0.72) !important;
+	border-radius:  0 !important;
+	background:     linear-gradient(135deg, #1D1020 0%, #101827 48%, #07111D 100%) !important;
+	color:          var(--text-color-heading) !important;
+	clip-path:      polygon(8% 0, 96% 0, 100% 28%, 92% 100%, 4% 100%, 0 72%);
+	padding:        0 30px;
+	box-shadow:     4px 4px 0 #020813,
+									0 0 14px rgba(247, 211, 95, 0.16),
+									inset 0 0 0 1px rgba(255, 255, 255, 0.08),
+									inset 0 -10px 18px rgba(0, 0, 0, 0.28);
+	text-transform: uppercase;
+	letter-spacing: 0.08em;
+	transition:     transform 140ms ease, box-shadow 140ms ease, border-color 140ms ease;
+}
+
+.triggerButton::before,
+.triggerButton::after {
+	position:       absolute;
+	pointer-events: none;
+}
+
+.triggerButton::after {
+	--move1:         inset(50% 50% 50% 50%);
+	--move2:         inset(31% 0 40% 0);
+	--move3:         inset(39% 0 15% 0);
+	--move4:         inset(45% 0 40% 0);
+	--move5:         inset(45% 0 6% 0);
+	--move6:         inset(14% 0 61% 0);
+	content:         attr(data-glitch);
+	inset:           -1px;
+	display:         flex;
+	align-items:     center;
+	justify-content: center;
+	clip-path:       var(--move1);
+	color:           var(--text-color-heading);
+	background:      transparent;
+	text-shadow:     -3px -3px 0 #1DF2F0, 3px 3px 0 #E94BE8;
+}
+
+.triggerButton:hover,
+.triggerButton:focus-visible {
+	transform:    translate(-2px, -2px);
+	border-color: var(--neon-blue) !important;
+	box-shadow:   6px 6px 0 #020813,
+								0 0 18px rgba(0, 213, 255, 0.34),
+								inset 0 0 18px rgba(0, 213, 255, 0.08);
+	text-shadow:  -1px -1px 0 #1DF2F0, 1px 1px 0 #E94BE8;
+}
+
+.triggerButton:hover::before,
+.triggerButton:focus-visible::before {
+	transform: translateX(120%);
+}
+
+.triggerButtonActive {
+	border-color: rgba(255, 77, 79, 0.95) !important;
+	background:   linear-gradient(135deg, #4A0710 0%, #8F121E 48%, #26030A 100%) !important;
+	box-shadow:   4px 4px 0 #020813,
+								0 0 16px rgba(255, 77, 79, 0.58),
+								0 0 34px rgba(255, 38, 66, 0.28),
+								inset 0 0 18px rgba(255, 245, 230, 0.16);
+}
+
+.triggerButtonActive::after {
+	animation: glitchTrackFileIssues 1s steps(2, end) infinite;
+	border:    3px solid rgba(255, 191, 0, 0.9);
+}
+
+.triggerButton :global(.anticon-bug) {
+	margin-right: 4px;
+}
+
+.triggerButtonIconOnly:global(.ant-btn) {
+	--playback-issue-trigger-size:      28px;
+	--playback-issue-trigger-icon-size: 15px;
+	width:                              var(--playback-issue-trigger-size);
+	min-width:                          var(--playback-issue-trigger-size);
+	height:                             var(--playback-issue-trigger-size);
+	padding:         0;
+	display:         inline-flex;
+	align-items:     center;
+	justify-content: center;
+	border:                             0 !important;
+	background:                         transparent !important;
+	box-shadow:                         none;
+	clip-path:       none;
+	border-radius:   var(--border-radius) !important;
+	overflow:        visible;
+	color:                              var(--text-color-secondary) !important;
+	text-transform:                     none;
+	letter-spacing:                     0;
+	transition:                         background-color 140ms ease, color 140ms ease, box-shadow 140ms ease;
+}
+
+.triggerButtonIconOnly:hover,
+.triggerButtonIconOnly:focus-visible {
+	transform:    none;
+	border-color: transparent !important;
+	background:   rgba(0, 213, 255, 0.1) !important;
+	box-shadow:   inset 0 0 0 1px rgba(0, 213, 255, 0.3);
+	color:        var(--text-color-heading) !important;
+	text-shadow:  none;
+}
+
+.triggerButtonIconOnly.triggerButtonActive:global(.ant-btn) {
+	border-color: transparent !important;
+	background:   rgba(255, 77, 79, 0.14) !important;
+	box-shadow:   inset 0 0 0 1px rgba(255, 77, 79, 0.48),
+								0 0 10px rgba(255, 77, 79, 0.2);
+	color:        #FFB3BD !important;
+}
+
+.triggerButtonIconOnly::after {
+	content:         attr(data-glitch);
+	left:            50%;
+	top:             50%;
+	right:           auto;
+	bottom:          auto;
+	width:           max-content;
+	height:          20px;
+	padding:         0 6px;
+	align-items:     center;
+	justify-content: center;
+	border:          0;
+	color:           transparent;
+	background:      transparent;
+	opacity:         0;
+	text-shadow:     none;
+	transform:       translate(-50%, -50%);
+}
+
+.triggerButtonIconOnly :global(.ant-btn-icon) {
+	margin-inline-end: 0 !important;
+}
+
+.triggerButtonIconOnly :global(.anticon-bug) {
+	display:      inline-flex;
+	margin-right: 0;
+	font-size: var(--playback-issue-trigger-icon-size);
+}
+
+.triggerButtonIconOnly.triggerButtonActive::after {
+	animation:   glitchTrackFileIssueGhost 1s steps(2, end) infinite;
+	color:       var(--text-color-heading);
+	text-shadow: -3px -2px 0 #1DF2F0, 3px 2px 0 #E94BE8;
+}
+
+.triggerButtonVertical:global(.ant-btn) {
+	width:            34px;
+	min-width:        34px;
+	height:           66px;
+	padding:          6px 0;
+	display:          inline-flex;
+	flex-direction:   column;
+	align-items:      center;
+	justify-content:  center;
+	gap:              4px;
+	writing-mode:     vertical-rl;
+	text-orientation: upright;
+	letter-spacing:   0.04em;
+}
+
+.triggerButtonVertical::after {
+	writing-mode:     vertical-rl;
+	text-orientation: upright;
+}
+
+.triggerButtonVertical :global(.ant-btn-icon) {
+	margin-inline-end: 0 !important;
+}
+
+.triggerButtonVertical :global(.anticon-bug) {
+	margin-right: 0;
+}
+
+@keyframes glitchTrackFileIssues {
+	0% {
+		clip-path: var(--move1);
+		transform: translate(0, -10px);
+	}
+
+	10% {
+		clip-path: var(--move2);
+		transform: translate(-10px, 10px);
+	}
+
+	20% {
+		clip-path: var(--move3);
+		transform: translate(10px, 0);
+	}
+
+	30% {
+		clip-path: var(--move4);
+		transform: translate(-10px, 10px);
+	}
+
+	40% {
+		clip-path: var(--move5);
+		transform: translate(10px, -10px);
+	}
+
+	50% {
+		clip-path: var(--move6);
+		transform: translate(-10px, 10px);
+	}
+
+	60% {
+		clip-path: var(--move1);
+		transform: translate(10px, -10px);
+	}
+
+	70% {
+		clip-path: var(--move3);
+		transform: translate(-10px, 10px);
+	}
+
+	80% {
+		clip-path: var(--move2);
+		transform: translate(10px, -10px);
+	}
+
+	90% {
+		clip-path: var(--move4);
+		transform: translate(-10px, 10px);
+	}
+
+	100% {
+		clip-path: var(--move1);
+		transform: translate(0);
+	}
+}
+
+@keyframes glitchTrackFileIssueGhost {
+	0%,
+	100% {
+		clip-path: inset(0);
+		opacity:   0;
+		transform: translate(-50%, -50%);
+	}
+
+	12% {
+		clip-path: inset(0 0 58% 0);
+		opacity:   0.78;
+		transform: translate(calc(-50% - 9px), calc(-50% + 1px));
+	}
+
+	24% {
+		clip-path: inset(44% 0 0 0);
+		opacity:   0.36;
+		transform: translate(calc(-50% + 8px), calc(-50% - 1px));
+	}
+
+	36% {
+		clip-path: inset(18% 0 36% 0);
+		opacity:   0.66;
+		transform: translate(calc(-50% - 5px), calc(-50% - 2px));
+	}
+
+	52% {
+		clip-path: inset(54% 0 14% 0);
+		opacity:   0.42;
+		transform: translate(calc(-50% + 6px), calc(-50% + 2px));
+	}
+
+	68% {
+		clip-path: inset(0 0 0 0);
+		opacity:   0;
+		transform: translate(-50%, -50%);
+	}
+
+	84% {
+		clip-path: inset(28% 0 26% 0);
+		opacity:   0.54;
+		transform: translate(calc(-50% + 3px), calc(-50% - 1px));
+	}
+}

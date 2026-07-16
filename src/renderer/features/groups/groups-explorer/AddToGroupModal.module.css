@@ -1,0 +1,55 @@
+.modal :global(.ant-modal-content) {
+	border:     var(--modal-border);
+	box-shadow: var(--modal-shadow);
+}
+
+.modal :global(.ant-modal-body) {
+	padding-top: var(--space-md);
+}
+
+.layout {
+	display:        flex;
+	flex-direction: column;
+	gap:            var(--space-md);
+}
+
+.summary {
+	color:       var(--text-color-secondary);
+	font-size:   var(--font-size-sm);
+	font-weight: 600;
+}
+
+.createRow {
+	display:               grid;
+	grid-template-columns: minmax(0, 1fr) auto;
+	gap:                   var(--space-sm);
+}
+
+.listSection {
+	display:        flex;
+	flex-direction: column;
+	gap:        var(--space-md);
+	min-height: 260px;
+}
+
+.groupSection {
+	display:        flex;
+	flex-direction: column;
+	gap:            var(--space-sm);
+	min-height:     0;
+}
+
+.sectionTitle {
+	color:          var(--text-color-heading);
+	font-weight:    700;
+	text-transform: uppercase;
+	letter-spacing: 0.8px;
+}
+
+.loadingState {
+	flex:            1;
+	display:         flex;
+	align-items:     center;
+	justify-content: center;
+	min-height:      180px;
+}

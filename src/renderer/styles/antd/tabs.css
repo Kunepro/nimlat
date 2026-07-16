@@ -1,0 +1,57 @@
+/* AntD tab labels sit over animated backgrounds, so use a dense arcade-HUD backing instead of bare text. */
+.ant-tabs .ant-tabs-tab {
+	padding: 0;
+}
+
+.ant-tabs .ant-tabs-tab-btn {
+	position:       relative;
+	display:        inline-flex;
+	align-items:    center;
+	min-height:     30px;
+	padding:        4px 14px;
+	border:         1px solid var(--tabs-label-border);
+	background:     var(--tabs-label-bg);
+	box-shadow:     var(--tabs-label-shadow);
+	color:          var(--text-color-secondary);
+	font-size:      var(--tabs-label-font-size);
+	letter-spacing: 0.06em;
+	line-height:    1;
+	text-transform: uppercase;
+	text-shadow:    var(--tabs-label-text-shadow);
+	transition:     background 120ms ease,
+									border-color 120ms ease,
+									box-shadow 120ms ease,
+									color 120ms ease;
+	clip-path:      polygon(10px 0, 100% 0, calc(100% - 10px) 100%, 0 100%);
+}
+
+.ant-tabs .ant-tabs-tab-btn::after {
+	content:        "";
+	position:       absolute;
+	right:          8px;
+	bottom:         3px;
+	left:           12px;
+	height:         1px;
+	background:     linear-gradient(90deg, transparent, var(--glow-color), transparent);
+	opacity:        0.54;
+	pointer-events: none;
+}
+
+.ant-tabs .ant-tabs-tab:hover .ant-tabs-tab-btn,
+.ant-tabs .ant-tabs-tab-btn:focus-visible {
+	border-color: var(--tabs-label-active-border);
+	color:        var(--text-color-heading);
+}
+
+.ant-tabs .ant-tabs-tab.ant-tabs-tab-active .ant-tabs-tab-btn {
+	border-color: var(--tabs-label-active-border);
+	background:   var(--tabs-label-active-bg);
+	box-shadow:   var(--tabs-label-active-shadow);
+	color:        var(--text-color-heading);
+	text-shadow:  var(--tabs-label-active-text-shadow);
+}
+
+.ant-tabs .ant-tabs-tab.ant-tabs-tab-active .ant-tabs-tab-btn::after {
+	background: linear-gradient(90deg, transparent, #FF367A, var(--glow-color));
+	opacity:    0.9;
+}

@@ -1,0 +1,44 @@
+.metadataSelect {
+	width: 100%;
+}
+
+.filterMenu {
+	display:        flex;
+	width:          min(360px, 72vw);
+	flex-direction: column;
+	gap:            var(--space-md);
+}
+
+.filterToggleRow {
+	display:     flex;
+	align-items: center;
+	min-width:   0;
+}
+
+.filterToggleLabel {
+	display:     inline-flex;
+	align-items: center;
+	gap:         var(--space-xs);
+}
+
+.filterField {
+	display:        flex;
+	flex-direction: column;
+	gap:            var(--space-xs);
+}
+
+.filterFieldLabel {
+	color:          var(--text-color-secondary);
+	font-size:      0.76rem;
+	font-weight:    700;
+	letter-spacing: 0;
+	text-transform: uppercase;
+}
+
+.adultFilterLabel {
+	color:          #FF2F72;
+	font-size:      11px;
+	font-weight:    800;
+	letter-spacing: 0;
+	line-height:    1;
+}

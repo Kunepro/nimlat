@@ -1,0 +1,32 @@
+.statusAction {
+	display:         flex;
+	justify-content: center;
+	align-items:     center;
+	min-height:      64px;
+}
+
+.downloadingRadio {
+	display:         flex;
+	justify-content: center;
+}
+
+.downloadingRadio [data-cyber-radio-buttons] {
+	justify-content: center;
+}
+
+.downloadingRadio [data-cyber-radio-wrapper] {
+	width: 160px;
+	height: 42px;
+}
+
+.downloadingRadio [data-cyber-radio-button] {
+	--font-size: 11px;
+	line-height:    42px;
+	letter-spacing: 1.2px;
+}
+
+.downloadingRadioLoading {
+	pointer-events: none;
+	filter:         saturate(0.75);
+	opacity:        0.82;
+}

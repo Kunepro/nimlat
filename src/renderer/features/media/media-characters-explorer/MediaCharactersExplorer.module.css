@@ -1,0 +1,176 @@
+.wrapper {
+	padding: var(--space-lg);
+}
+
+.toolbar {
+	display:         flex;
+	align-items:     center;
+	justify-content: flex-end;
+	gap:             var(--space-sm);
+	margin-bottom:   var(--space-md);
+}
+
+.toolbar span {
+	color:          var(--text-color-secondary);
+	text-transform: uppercase;
+	letter-spacing: 0.12em;
+	font-size:      12px;
+}
+
+.languageSelect {
+	min-width: 148px;
+}
+
+.cardSwitchShell {
+	display: inline-flex;
+}
+
+.cardSwitch {
+	display:         inline-flex;
+	align-items:     center;
+	justify-content: center;
+	flex:            0 0 24px;
+	aspect-ratio:    1;
+	padding:         0;
+	border-radius:   50%;
+	line-height:     1;
+}
+
+.glitchedSwitch {
+	border-color: color-mix(in srgb, var(--color-error) 68%, var(--border-color));
+	color:        var(--color-error);
+	filter:       saturate(1.3) contrast(1.1);
+}
+
+.glitchedSwitch[disabled] {
+	opacity: 0.72;
+}
+
+.grid {
+	display:               grid;
+	grid-template-columns: repeat(auto-fill, minmax(234px, 1fr));
+	gap:                   var(--space-md);
+}
+
+.card {
+	min-height:      112px;
+	position:        relative;
+	padding:         var(--space-sm);
+	border:          1px solid var(--border-color);
+	border-radius:   var(--border-radius-lg);
+	background:      color-mix(in srgb, var(--color-bg-container) 88%, transparent);
+	box-shadow:      var(--box-shadow-base);
+	color:           var(--text-color);
+	text-decoration: none;
+	transition:      border-color 120ms ease, transform 120ms ease;
+}
+
+.cardLink {
+	display:               grid;
+	grid-template-columns: 74px minmax(0, 1fr);
+	gap:                   var(--space-sm);
+	align-items:           center;
+	color:                 inherit;
+	text-decoration: none;
+}
+
+.absentCard {
+	border-style: dashed;
+}
+
+.cardSwitchShell {
+	position: absolute;
+	top:      6px;
+	right:    6px;
+}
+
+.cardSwitch {
+	width:     24px;
+	min-width: 24px;
+	height:    24px;
+	font-size: 11px;
+}
+
+.card:hover,
+.card:focus-visible {
+	border-color: var(--color-primary);
+	transform:    translateY(-1px);
+}
+
+.absentCard:hover {
+	border-color: color-mix(in srgb, var(--color-error) 68%, var(--border-color));
+}
+
+.portraitFrame {
+	width:         74px;
+	height:        96px;
+	overflow:      hidden;
+	border-radius: var(--border-radius-md);
+	background:    var(--background-elevated);
+}
+
+.portrait {
+	width:      100%;
+	height:     100%;
+	object-fit: cover;
+	display:    block;
+}
+
+.portraitFallback {
+	display:         flex;
+	align-items:     center;
+	justify-content: center;
+	width:           100%;
+	height:          100%;
+	font-size:       28px;
+	font-weight:     700;
+	color:           var(--text-color-secondary);
+}
+
+.cardBody {
+	min-width: 0;
+}
+
+.characterName {
+	display:         inline-block;
+	max-width:       100%;
+	color:           var(--text-color);
+	font-size:       15px;
+	font-weight:     700;
+	text-decoration: none;
+	overflow:        hidden;
+	text-overflow:   ellipsis;
+	white-space:     nowrap;
+}
+
+.card:hover .characterName,
+.card:focus-visible .characterName {
+	color: var(--color-primary);
+}
+
+.nativeName {
+	margin-top:    4px;
+	color:         var(--text-color-secondary);
+	font-size:     12px;
+	overflow:      hidden;
+	text-overflow: ellipsis;
+	white-space:   nowrap;
+}
+
+.role {
+	display:        inline-flex;
+	margin-top:     var(--space-xs);
+	padding:        3px 8px;
+	border-radius:  999px;
+	background:     var(--background-elevated);
+	color:          var(--text-color-secondary);
+	font-size:      11px;
+	letter-spacing: 0.08em;
+	text-transform: uppercase;
+}
+
+@media (max-width: 800px) {
+	.grid {
+		grid-template-columns: repeat(auto-fill, minmax(208px, 1fr));
+	}
+}

@@ -1,0 +1,98 @@
+.wrapper {
+	height:     100%;
+	min-height: 0;
+	overflow:   auto;
+	padding:    var(--space-lg);
+}
+
+.mediaSectionHeader {
+	display:         flex;
+	align-items:     baseline;
+	justify-content: space-between;
+	gap:             var(--space-md);
+	margin:          var(--space-xl) 0 var(--space-md);
+}
+
+.mediaSectionHeader h2 {
+	margin:         0;
+	font-size:      clamp(22px, 3vw, 32px);
+	letter-spacing: 0.04em;
+}
+
+.mediaSectionHeader span {
+	color:          var(--text-color-secondary);
+	text-transform: uppercase;
+	letter-spacing: 0.12em;
+	font-size:      12px;
+}
+
+.mediaGrid {
+	display:               grid;
+	grid-template-columns: repeat(auto-fill, minmax(168px, 1fr));
+	gap:                   var(--space-md);
+}
+
+.mediaCard {
+	display:         block;
+	overflow:        hidden;
+	border:          1px solid var(--border-color);
+	border-radius:   var(--border-radius-lg);
+	background:      color-mix(in srgb, var(--color-bg-container) 88%, transparent);
+	box-shadow:      var(--box-shadow-base);
+	color:           var(--text-color);
+	text-decoration: none;
+}
+
+.mediaCard:hover {
+	border-color: var(--color-primary);
+}
+
+.mediaPosterFrame {
+	aspect-ratio: 2 / 3;
+	background:   var(--background-elevated);
+}
+
+.mediaPoster,
+.mediaPosterFallback {
+	width:  100%;
+	height: 100%;
+}
+
+.mediaPoster {
+	display:    block;
+	object-fit: cover;
+}
+
+.mediaPosterFallback {
+	display:         flex;
+	align-items:     center;
+	justify-content: center;
+	color:           var(--text-color-secondary);
+	font-size:       36px;
+	font-weight:     700;
+}
+
+.mediaMeta {
+	padding: var(--space-sm);
+}
+
+.mediaTitle {
+	overflow:      hidden;
+	text-overflow: ellipsis;
+	white-space:   nowrap;
+	font-weight:   700;
+}
+
+.mediaSubline {
+	margin-top:     4px;
+	color:          var(--text-color-secondary);
+	font-size:      12px;
+	letter-spacing: 0.06em;
+	text-transform: uppercase;
+}
+
+@media (max-width: 800px) {
+	.mediaGrid {
+		grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+	}
+}

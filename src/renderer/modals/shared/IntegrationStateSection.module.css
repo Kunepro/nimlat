@@ -1,0 +1,49 @@
+.section {
+	display:        flex;
+	flex-direction: column;
+	gap:            var(--space-md);
+	padding:        var(--space-lg);
+	border:         var(--panel-dashed-border);
+	border-radius:  var(--border-radius-lg);
+	background:     var(--panel-muted-bg);
+}
+
+.issueGrid {
+	display:               grid;
+	grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+	gap:                   var(--space-sm) var(--space-md);
+}
+
+.noteActions {
+	display:         flex;
+	justify-content: flex-end;
+}
+
+.momentsList {
+	display:        flex;
+	flex-direction: column;
+	gap:            var(--space-sm);
+}
+
+.momentRow {
+	display:               grid;
+	grid-template-columns: minmax(0, 180px) minmax(0, 120px) minmax(0, 1fr) auto;
+	gap:                   var(--space-sm);
+	align-items:           start;
+}
+
+.momentAction {
+	display:     flex;
+	align-items: center;
+	height:      32px;
+}
+
+@media (max-width: 900px) {
+	.momentRow {
+		grid-template-columns: 1fr;
+	}
+
+	.momentAction {
+		height: auto;
+	}
+}

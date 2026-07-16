@@ -1,56 +1,158 @@
 {
-  "name": "my-anime-tracker",
-  "private": true,
-  "version": "0.0.0",
-  "main": "main.js",
-  "author": "Nicolò Zanetti",
-  "description": "Table to help tracking anime integration in my personal media library.",
-  "scripts": {
-    "dev": "vite",
-    "electron": "tsc main.ts --outDir dist && electron dist/main.js",
-    "start": "concurrently \"vite --host\" \"wait-on http://localhost:5173 && npm run electron\"",
-    "build": "rimraf dist release && tsc main.ts && vite build",
-    "package": "npm run build && electron-builder"
-  },
-  "build": {
-    "appId": "com.my-anime-tracker",
-    "win": {
-      "target": "nsis",
-      "icon": "icon.ico"
-    },
-    "files": [
-      "main.js",
-      "dist/**/*",
-      "icon.ico"
-    ],
-    "asar": true,
-    "directories": {
-      "output": "release"
-    },
-    "extraMetadata": {
-      "main": "main.js"
-    }
-  },
-  "dependencies": {
-    "graphql-request": "^7.1.2",
-    "react": "^19.0.0",
-    "react-dom": "^19.0.0",
-    "sqlite3": "^5.1.7"
-  },
-  "devDependencies": {
-    "@eslint/js": "^9.21.0",
-    "@types/react": "^19.0.10",
-    "@types/react-dom": "^19.0.4",
-    "@vitejs/plugin-react": "^4.3.4",
-    "concurrently": "^9.1.2",
-    "electron": "^34.2.0",
-    "electron-builder": "^25.1.8",
-    "eslint": "^9.21.0",
-    "eslint-plugin-react": "^7.37.4",
-    "eslint-plugin-react-hooks": "^5.0.0",
-    "eslint-plugin-react-refresh": "^0.4.19",
-    "globals": "^15.15.0",
-    "vite": "^6.2.0",
-    "wait-on": "^8.0.2"
-  }
+	"name":            "nimlat",
+	"private":         true,
+	"version":         "1.0.0",
+	"license":         "SEE LICENSE IN LICENSE",
+	"main":            "dist/main.js",
+	"author":          "Nicolò Zanetti",
+	"description":     "Table to help tracking anime integration in my personal media library.",
+	"scripts":         {
+		"dev":                     "concurrently \"tsx tools/generate-theme.ts --watch\" \"vite\"",
+		"lint":                    "eslint .",
+		"validate":                "npm run validate:quick && npm run internal:test:e2e && npm run smoke:db",
+		"validate:quick":          "npm run internal:typecheck:repo && npm run lint && npm run audit:exports && npm run test",
+		"audit:exports":           "node tools/architecture/audit-unused-exports.cjs",
+		"audit:prod":              "npm audit --omit=dev",
+		"test":                    "vitest run",
+		"test:e2e":                "npm run internal:test:e2e",
+		"smoke:db":                "npm run internal:smoke:db",
+		"test:watch":              "vitest",
+		"build":                   "node tools/clean-build-output.js && vite build && node tools/prepare-icons.cjs && node tools/verify-build-output.cjs",
+		"verify:build":            "node tools/verify-build-output.cjs",
+		"package":                 "npm run build && node tools/run-electron-builder-with-native-restore.cjs",
+		"internal:typecheck":      "tsc --noEmit",
+		"internal:typecheck:repo": "tsc -p tsconfig.repo.json",
+		"internal:lint:fix":       "eslint . --fix",
+		"internal:test:providers": "vitest run --reporter=verbose src/main/daemons/media-hydrator/daemons/group-jikan-episodes-daemon.test.ts src/main/services/group-explorer/group-explorer-service.test.ts",
+		"internal:test:e2e":       "playwright test --config=playwright.config.ts",
+		"internal:smoke:db":       "node tools/smoke/run-db-smoke.cjs",
+		"internal:electron":       "electron dist/main.js",
+		"postinstall":             "electron-builder install-app-deps",
+		"prebuild":                "tsx tools/generate-theme.ts",
+		"package:mac":             "npm run build && node tools/run-electron-builder-with-native-restore.cjs --mac",
+		"package:win":             "npm run build && node tools/run-electron-builder-with-native-restore.cjs --win",
+		"package:linux":           "npm run build && node tools/run-electron-builder-with-native-restore.cjs --linux",
+		"publish:github":          "npm run build && node tools/run-electron-builder-with-native-restore.cjs --publish always"
+	},
+	"build":           {
+		"appId":          "com.nimlat",
+		"productName":    "Nimlat",
+		"win":            {
+			"target":         "nsis",
+			"icon":           "icon.png",
+			"signExecutable": false,
+			"artifactName":   "${productName}-${version}-${arch}.${ext}"
+		},
+		"files":          [
+			"dist/**/*",
+			"node_modules/**/*",
+			"LICENSE",
+			"NOTICE.md",
+			"src/assets/fonts/Goldman-OFL.txt"
+		],
+		"asar":           true,
+		"directories":    {
+			"output":         "release",
+			"buildResources": "build"
+		},
+		"extraResources": [],
+		"publish":        [
+			{
+				"provider": "github",
+				"owner":    "Kunepro",
+				"repo":     "nimlat"
+			}
+		],
+		"mac":            {
+			"icon":         "icon.png",
+			"identity":     null,
+			"notarize":     false,
+			"target":       [
+				{
+					"target": "dmg",
+					"arch":   [
+						"arm64",
+						"x64"
+					]
+				},
+				{
+					"target": "zip",
+					"arch":   [
+						"arm64",
+						"x64"
+					]
+				}
+			],
+			"category":     "public.app-category.entertainment",
+			"artifactName": "${productName}-${version}-${arch}.${ext}"
+		},
+		"linux":          {
+			"icon":         "icon.png",
+			"target":       [
+				"AppImage"
+			],
+			"category":     "AudioVideo",
+			"artifactName": "${productName}-${version}-${arch}.${ext}"
+		}
+	},
+	"overrides":       {
+		"@babel/core": "7.29.7",
+		"js-yaml":     "4.3.0",
+		"tar-fs":      "2.1.5"
+	},
+	"dependencies":    {
+		"@ant-design/icons":               "^6.0.0",
+		"@octokit/rest":                   "^21.1.1",
+		"@tanstack/react-router":          "^1.157.3",
+		"@tanstack/react-virtual":         "^3.13.6",
+		"antd":                            "^5.24.8",
+		"better-sqlite3":                  "^12.11.1",
+		"electron-dl":                     "^4.0.0",
+		"electron-updater":                "^6.8.3",
+		"entities":                        "^6.0.1",
+		"graphql-request":                 "^7.1.2",
+		"jotai":                           "^2.12.1",
+		"p-queue":                         "^8.1.0",
+		"pixi.js":                         "^8.18.1",
+		"react":                           "^19.0.0",
+		"react-dom":                       "^19.0.0",
+		"react-lazy-load-image-component": "^1.6.3",
+		"rxjs":                            "^7.8.2"
+	},
+	"devDependencies": {
+		"@eslint/js":                             "^9.39.4",
+		"@playwright/test":                       "^1.61.1",
+		"@rollup/plugin-commonjs":                "^28.0.3",
+		"@rollup/plugin-replace":                 "^6.0.2",
+		"@testing-library/jest-dom":              "^6.6.3",
+		"@testing-library/react":                 "^16.3.0",
+		"@types/antd":                            "^0.12.32",
+		"@types/better-sqlite3":                  "^7.6.13",
+		"@types/node":                            "^25.0.10",
+		"@types/react":                           "^19.0.10",
+		"@types/react-dom":                       "^19.0.4",
+		"@types/react-lazy-load-image-component": "^1.6.4",
+		"@types/react-router-dom":                "^5.3.3",
+		"@types/react-window":                    "^1.8.8",
+		"@typescript-eslint/eslint-plugin":       "^8.62.1",
+		"@typescript-eslint/parser":              "^8.62.1",
+		"@vitejs/plugin-react":                   "^4.7.0",
+		"chokidar":                               "^5.0.0",
+		"concurrently":                           "^9.2.3",
+		"electron":                               "^43.0.0",
+		"electron-builder":                       "^26.15.3",
+		"eslint":                                 "^9.39.4",
+		"eslint-plugin-react":                    "^7.37.4",
+		"eslint-plugin-react-hooks":              "^5.0.0",
+		"eslint-plugin-react-refresh":            "^0.4.19",
+		"globals":                                "^15.15.0",
+		"jsdom":                                  "^26.1.0",
+		"knip":                                   "^6.24.0",
+		"tsx":                                    "^4.21.0",
+		"typescript":                             "^5.8.3",
+		"vite":                                   "^6.4.3",
+		"vite-plugin-electron":                   "^0.29.0",
+		"vitest":                                 "^3.2.6",
+		"wait-on":                                "^8.0.2"
+	}
 }

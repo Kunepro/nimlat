@@ -1,0 +1,19 @@
+Nimlat Source-Available Proprietary License
+
+Copyright (c) 2026-present Nicolò Zanetti. All rights reserved.
+
+This repository and its contents are proprietary. They are made publicly visible so people can inspect the source code for security concerns, review the project as part of the author's software portfolio, and compile the software for their own personal, non-commercial use under the limited permission below.
+
+This is not open-source software. Except for the limited permissions stated below or where a separate written agreement from the copyright owner says otherwise, no license is granted to copy, modify, publish, distribute, sublicense, mirror, host, commercialize, reuse, create derivative works from, or otherwise exploit this repository, its source code, generated builds, assets, documentation, or any substantial part of them.
+
+Users may download and copy the unmodified repository contents only as reasonably necessary to inspect the source code, compile it, and run the resulting build solely for their own personal, non-commercial use. This is the only permission granted to create or run a self-compiled build. It does not permit modification, publication, distribution, redistribution, sharing, sublicensing, hosting, commercialization, resale, repackaging, or providing the source code or a generated build to anyone else.
+
+Users may create a repository fork and modify the repository contents only as reasonably necessary to prepare, test, and submit a contribution to Nimlat. They may make the unmodified repository contents and their proposed changes available through that fork only as necessary to submit and maintain a complete pull request to the official project repository. Modified builds may be run locally only for that contribution workflow. This permission does not allow an independent distribution, publication outside that contribution fork and pull request, commercialization, or use of the modified code or build for any other purpose.
+
+Official installers and binaries published by the copyright owner may be downloaded and run as released. That limited permission does not allow redistribution, repackaging, modification, resale, sublicensing, hosting, or creation of derivative works.
+
+Security inspection and portfolio review are allowed only as passive review activities. Any use outside the official released application or the limited personal-build permission above requires prior written permission from the copyright owner.
+
+The software, source code, generated builds, assets, and documentation may not be used for artificial intelligence, machine learning, automated analysis, or model-training workflows of any kind. This includes, without limitation, dataset creation, fine-tuning, embeddings, vector indexes, benchmark or evaluation corpora, code-generation systems, scraping, mining, or model improvement workflows. Ordinary local dependency installation, build, type-checking, and validation tools used solely to exercise the personal-build permission above are allowed; this exception does not authorize any artificial intelligence or machine-learning use.
+
+By submitting a pull request, the contributor represents that the contribution is original or that they have all rights necessary to submit it, and grants the copyright owner a perpetual, worldwide, non-exclusive, irrevocable, royalty-free, transferable, and sublicensable license to use, reproduce, modify, distribute, publicly display, publicly perform, commercialize, and relicense the contribution as part of Nimlat or related project materials. The contributor retains ownership of their contribution. Contributions must respect the application architecture and quality requirements. The copyright owner reserves the right to reject any pull request for any reason and without explanation.

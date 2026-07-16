@@ -1,0 +1,36 @@
+{
+	"$schema":    "./node_modules/knip/schema.json",
+	"workspaces": {
+		".": {
+			"entry":   [
+				"index.html",
+				"src/main/main.ts",
+				"src/preload/preload.ts",
+				"playwright.config.ts",
+				"vite.config.js",
+				"tools/*.cjs",
+				"tools/*.js",
+				"tools/*.ts",
+				"tools/e2e/playwright-electron-entry.cjs",
+				"tools/e2e/playwright-electron-main.ts",
+				"tools/e2e/renderer-*-entry.tsx",
+				"tools/e2e/specs/**/*.e2e.ts",
+				"tools/smoke/electron-entry.cjs",
+				"tools/smoke/electron-db-smoke.ts",
+				"tools/smoke/run-db-smoke.cjs"
+			],
+			"project": [
+				"src/**/*.{ts,tsx}",
+				"tools/**/*.{ts,tsx,js,cjs}",
+				"*.config.{ts,js}",
+				"vite.config.js",
+				"playwright.config.ts"
+			],
+			"ignore":  [
+				"assets/**",
+				"dist/**",
+				"release/**"
+			]
+		}
+	}
+}

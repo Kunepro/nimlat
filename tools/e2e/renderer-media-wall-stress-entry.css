@@ -1,0 +1,17 @@
+.stressShell {
+	box-sizing: border-box;
+	height:     100%;
+	padding:    12px;
+	background: #050A12;
+}
+
+.stressWall {
+	height:     100%;
+	min-height: 0;
+}
+
+.stressActiveOverlay {
+	position: absolute;
+	right:    8px;
+	bottom:   8px;
+}

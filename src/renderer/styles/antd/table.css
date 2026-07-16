@@ -1,0 +1,36 @@
+/* Table overrides (for media/episode tracking views; uses vars from theme-config.ts) */
+.ant-table {
+	background-color: var(--table-bg);
+	color:            var(--table-text-color);
+	font-family:      var(--font-family);
+	border:           none;
+}
+
+.ant-table-thead > tr > th {
+	background:    var(--table-header-bg);
+	color:         var(--table-header-color);
+	border-bottom: 2px solid var(--table-header-border);
+	font-weight:   normal;
+	font-size:     14px;
+}
+
+.ant-table-tbody > tr {
+	transition: box-shadow 0.3s ease;
+}
+
+.ant-table-tbody > tr:hover {
+	background-color: var(--table-row-hover-bg);
+	box-shadow:       var(--table-row-hover-shadow);
+}
+
+/* Cell styling */
+.ant-table-cell {
+	border-bottom: 1px solid var(--table-cell-border);
+	padding:       12px 16px;
+}
+
+/* Highlighted row */
+.ant-table-row-selected {
+	background-color: var(--table-selected-row-bg) !important;
+	box-shadow:       var(--table-selected-row-shadow);
+}

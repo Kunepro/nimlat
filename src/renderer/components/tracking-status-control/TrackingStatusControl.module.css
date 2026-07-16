@@ -1,0 +1,254 @@
+.trap {
+	height:         var(--tracking-status-height, 76px);
+	min-height:     var(--tracking-status-height, 76px);
+	width:          100%;
+	border:         1px solid rgba(0, 225, 255, 0.52);
+	background:     linear-gradient(180deg, rgba(0, 178, 255, 0.78), rgba(6, 70, 150, 0.92));
+	clip-path:      polygon(10% 0, 90% 0, 100% 100%, 0 100%);
+	box-shadow:     inset 0 1px 0 rgba(213, 247, 255, 0.28),
+									0 0 18px rgba(0, 178, 255, 0.35);
+	color:          var(--text-color-heading);
+	cursor:         pointer;
+	padding:        0 var(--space-sm);
+	transition:     none;
+	container-type: inline-size;
+	display:        flex;
+	align-items:    center;
+	justify-content: center;
+}
+
+.trap:focus-visible {
+	box-shadow: inset 0 1px 0 rgba(213, 247, 255, 0.35),
+							0 0 22px rgba(0, 178, 255, 0.46);
+	outline:    none;
+}
+
+.trapLoading {
+	filter: saturate(0.75);
+}
+
+.projectorTrap {
+	border-color: transparent;
+	background:   transparent;
+	clip-path:    none;
+	box-shadow:   none;
+}
+
+.projectorTrap:focus-visible {
+	box-shadow: none;
+}
+
+.projectorTrap .tag:global(.ant-tag) {
+	opacity: 0;
+}
+
+.projectorPopover :global(.ant-popover-content) {
+	transform: translateY(-104px);
+}
+
+.inlineProjectorCluster {
+	--tracking-progress:       0%;
+	--tracking-progress-color: rgba(255, 53, 72, 0.98);
+	--tracking-track-color:    rgba(35, 43, 52, 0.64);
+	display:                   inline-flex;
+	align-items:               center;
+	gap:                       2px;
+	height:                    48px;
+}
+
+.inlineProjectorClusterIntegrated {
+	--tracking-progress-color: rgba(0, 255, 125, 0.96);
+	--tracking-track-color:    rgba(0, 255, 125, 0.18);
+}
+
+.inlineProjectorMeter {
+	position:      relative;
+	width:         5px;
+	height:        44px;
+	border-radius: 999px;
+	background:    linear-gradient(180deg, rgba(9, 16, 25, 0.92), var(--tracking-track-color));
+	box-shadow:    inset 0 0 0 1px rgba(255, 255, 255, 0.12),
+								 0 0 6px rgba(0, 0, 0, 0.42);
+	overflow:      hidden;
+}
+
+.inlineProjectorMeterFill {
+	position:      absolute;
+	left:          0;
+	right:         0;
+	bottom:        0;
+	height:        var(--tracking-progress);
+	border-radius: inherit;
+	background:    linear-gradient(180deg, color-mix(in srgb, var(--tracking-progress-color) 70%, white), var(--tracking-progress-color));
+	box-shadow:    0 0 7px color-mix(in srgb, var(--tracking-progress-color) 64%, transparent);
+}
+
+.inlineProjectorDevice {
+	position:   relative;
+	isolation:  isolate;
+	width:      22px;
+	height:     44px;
+	border:     0;
+	background: radial-gradient(circle at 50% 50%, rgba(28, 35, 43, 0.98) 0 54%, rgba(6, 10, 16, 0.98) 55% 100%);
+	box-shadow: 0 3px 8px rgba(0, 0, 0, 0.48),
+							0 0 0 1px rgba(255, 255, 255, 0.2),
+							0 0 0 3px rgba(4, 8, 14, 0.92);
+	cursor:     pointer;
+	padding:    0;
+}
+
+.inlineProjectorDevice::before {
+	content:       "";
+	position:      absolute;
+	z-index:       0;
+	inset:         0;
+	border-radius: 6%;
+	background:    conic-gradient(rgb(104, 104, 104), white, rgb(104, 104, 104), white, rgb(104, 104, 104)),
+								 linear-gradient(145deg, rgba(255, 255, 255, 0.22), rgba(0, 0, 0, 0.42));
+	box-shadow:    inset 0 1px 3px rgba(255, 255, 255, 0.35),
+								 inset 0 -4px 7px rgba(0, 0, 0, 0.48);
+}
+
+.inlineProjectorDeviceIntegrated {
+	box-shadow: 0 3px 8px rgba(0, 0, 0, 0.48),
+							0 0 18px rgba(0, 255, 125, 0.36),
+							0 0 0 1px rgba(180, 255, 214, 0.26),
+							0 0 0 3px rgba(4, 8, 14, 0.92);
+}
+
+.inlineProjectorLens {
+	position:      absolute;
+	z-index: 2;
+	left:          50%;
+	top:           50%;
+	width:   12px;
+	height:  12px;
+	border-radius: 50%;
+	background:    radial-gradient(circle at 36% 30%, rgba(255, 226, 226, 0.96), rgba(255, 76, 76, 0.95) 28%, rgba(93, 0, 11, 0.98) 70%);
+	box-shadow:    inset 0 1px 2px rgba(255, 255, 255, 0.35),
+								 0 0 0 1px rgba(43, 0, 0, 0.78);
+	transform:     translate(-50%, -50%);
+	transition:    box-shadow 160ms ease, filter 160ms ease;
+}
+
+.inlineProjectorDevice:hover .inlineProjectorLens,
+.inlineProjectorDevice:focus-visible .inlineProjectorLens,
+.inlineProjectorDeviceActive .inlineProjectorLens {
+	box-shadow: inset 0 1px 2px rgba(255, 255, 255, 0.42),
+							0 0 0 1px rgba(43, 0, 0, 0.78),
+							0 0 14px rgba(255, 34, 52, 0.84),
+							0 0 32px rgba(255, 0, 36, 0.36);
+	filter:     saturate(1.28) brightness(1.18);
+}
+
+.inlineProjectorDevice:focus-visible {
+	outline:        2px solid rgba(255, 77, 79, 0.86);
+	outline-offset: 3px;
+}
+
+.inlineProjectorOverlay {
+	position:   fixed;
+	z-index:    10000;
+	width: 176px;
+	min-height: 230px;
+	padding:    0;
+	border:     0;
+	background: transparent;
+	box-shadow: none;
+}
+
+.inlineProjectorOverlay::before {
+	content:        "";
+	position:       absolute;
+	right:      100%;
+	top:            50%;
+	width:          42px;
+	height:         160px;
+	pointer-events: none;
+	background: linear-gradient(90deg, rgba(255, 34, 52, 0.34), rgba(255, 34, 52, 0.16) 58%, transparent);
+	clip-path:  polygon(0 46%, 100% 0, 100% 100%, 0 54%);
+	filter:     blur(3px);
+	transform:  translate(12px, -50%);
+}
+
+.inlineProjectorOverlay .menu [data-cyber-radio-buttons] {
+	flex-direction:  column;
+	align-items:     stretch;
+	justify-content: center;
+	gap:             var(--space-xs);
+	margin-left: 20px;
+}
+
+.inlineProjectorOverlay .menu [data-cyber-radio-wrapper] {
+	width:  148px;
+	height: 38px;
+}
+
+.inlineProjectorOverlay .menu [data-cyber-radio-button] {
+	--font-size:    9px;
+	line-height:    38px;
+	letter-spacing: 0.8px;
+}
+
+.tag:global(.ant-tag) {
+	margin-inline-end: 0;
+	border:            0;
+	background:        transparent;
+	color:             var(--text-color-heading);
+	font-size:         clamp(9px, 16cqi, 13px);
+	font-weight:       700;
+	letter-spacing:    clamp(0.2px, 0.7cqi, 0.6px);
+	line-height:       1.1;
+	white-space:       nowrap;
+	overflow:          hidden;
+	text-overflow:     ellipsis;
+	text-transform:    uppercase;
+}
+
+.menu {
+	width: auto;
+}
+
+.menu [data-cyber-radio-buttons] {
+	gap:       var(--space-xs);
+	flex-wrap: nowrap;
+}
+
+.menu [data-cyber-radio-wrapper] {
+	width: clamp(124px, 18vw, 144px);
+	height: 52px;
+	margin: 2px;
+}
+
+.menu [data-cyber-radio-button] {
+	--font-size: 10px;
+	line-height: 52px;
+	letter-spacing: 1.2px;
+}
+
+.menu [data-cyber-radio-label] {
+	display:   inline-block;
+	max-width: 88%;
+	overflow:  hidden;
+}
+
+.menu [data-cyber-radio-number] {
+	left: 83%;
+}
+
+.popover :global(.ant-popover-inner) {
+	background: transparent;
+	border:     0;
+	box-shadow: none;
+	padding:    0;
+}
+
+.popover :global(.ant-popover-arrow) {
+	display: none;
+}
+
+.popover:global(.ant-popover) {
+	animation-delay:    0s !important;
+	animation-duration: 0s !important;
+	transition-delay:   0s !important;
+}

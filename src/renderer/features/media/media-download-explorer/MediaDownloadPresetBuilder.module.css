@@ -1,0 +1,104 @@
+.builderStack {
+	display:        flex;
+	flex-direction: column;
+	gap:            var(--space-md);
+	min-width:      0;
+}
+
+.compactPanel {
+	display:        flex;
+	flex-direction: column;
+	gap:            var(--space-sm);
+	border:         var(--panel-border);
+	border-radius:  var(--border-radius-md);
+	background: var(--background-elevated);
+	padding:        var(--space-sm);
+	min-width:      0;
+}
+
+.fieldGroup {
+	display:               grid;
+	grid-template-columns: 88px repeat(3, minmax(120px, 1fr));
+	gap:                   var(--space-sm);
+	align-items:           center;
+	min-width:             0;
+}
+
+.fieldGroup :global(.ant-select),
+.fieldGroup :global(.ant-input),
+.customTextRow :global(.ant-input),
+.previewField :global(.ant-input) {
+	min-width: 0;
+}
+
+.fieldGroup :global(.ant-select-selector),
+.customTextRow :global(.ant-input),
+.previewField :global(.ant-input) {
+	background: var(--background-color) !important;
+}
+
+.fieldLabel {
+	color:       var(--text-color-heading);
+	font-size:   var(--font-size-sm);
+	font-weight: 600;
+}
+
+.customTextRow {
+	display:               grid;
+	grid-template-columns: 88px minmax(180px, 1fr);
+	gap:                   var(--space-sm);
+	align-items:           center;
+	min-width:             0;
+}
+
+.previewPanel {
+	display:        flex;
+	flex-direction: column;
+	gap:            var(--space-sm);
+	border:         var(--panel-border);
+	border-radius:  var(--border-radius-md);
+	background:     var(--background-elevated);
+	padding:        var(--space-sm);
+	min-width:      0;
+}
+
+.previewGrid {
+	display:               grid;
+	grid-template-columns: minmax(220px, 2fr) minmax(260px, 3fr);
+	gap:                   var(--space-sm);
+	align-items:           end;
+	min-width:             0;
+}
+
+.previewField {
+	display:        flex;
+	flex-direction: column;
+	gap:            var(--space-xs);
+	min-width:      0;
+}
+
+.queryPreview {
+	padding:       var(--space-xs) var(--space-sm);
+	border:        var(--panel-dashed-border);
+	border-radius: var(--border-radius-md);
+	color:         var(--text-color);
+	background: var(--background-color);
+	font-size:     var(--font-size-sm);
+	word-break:    break-word;
+	min-height: 32px;
+}
+
+.generatePresetRow {
+	display:         flex;
+	justify-content: center;
+	align-items:     center;
+	gap:             var(--space-sm);
+}
+
+@media (max-width: 800px) {
+	.customTextRow,
+	.fieldGroup,
+	.previewGrid {
+		grid-template-columns: 1fr;
+	}
+}

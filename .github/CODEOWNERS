@@ -1,0 +1,5 @@
+# GitHub uses this ownership rule to require Nicolò's review on every contribution.
+* @Kunepro
+
+# Keep repository governance owned explicitly if broader ownership rules change later.
+/.github/ @Kunepro

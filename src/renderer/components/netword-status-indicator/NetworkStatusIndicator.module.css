@@ -1,0 +1,11 @@
+.indicator {
+	display:     flex;
+	align-items: center;
+	gap:         8px;
+}
+
+.statusIcon {
+	margin-right: 2px;
+	padding-top:  4px;
+	font-size:    18px;
+}

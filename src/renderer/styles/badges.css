@@ -1,0 +1,20 @@
+.badge-downloaded {
+	background: var(--badge-downloaded-bg);
+	color: var(--badge-downloaded-color);
+}
+
+.badge-organized {
+	background: var(--badge-organized-bg);
+	color: var(--badge-organized-color);
+}
+
+.badge-recognized {
+	background: var(--badge-recognized-bg);
+	color: var(--badge-recognized-color);
+}
+
+.badge-audio,
+.badge-issue {
+	background: var(--badge-audio-bg);
+	color: var(--badge-audio-color);
+}

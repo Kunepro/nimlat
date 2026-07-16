@@ -1,0 +1,170 @@
+.viewportShell {
+	--media-wall-scrollbar-extension: 14px;
+	--media-wall-scrollbar-gap:     var(--space-sm);
+	--media-wall-scrollbar-width:   14px;
+	--media-wall-scrollbar-reserve: calc(var(--media-wall-scrollbar-extension) + var(--media-wall-scrollbar-gap) + var(--media-wall-scrollbar-width));
+	position:   relative;
+	flex:       1 1 auto;
+	box-sizing: border-box;
+	width:      100%;
+	height:     100%;
+	min-width:  0;
+	min-height: 0;
+	overflow:   visible;
+}
+
+.scrollContainer {
+	position:         relative;
+	box-sizing:       border-box;
+	width:            calc(100% + var(--media-wall-scrollbar-extension));
+	height:           100%;
+	min-height:       0;
+	margin-right:     calc(-1 * var(--media-wall-scrollbar-extension));
+	/* Keep the native scrollbar at the window edge while letting the canvas use most of the page gutter. */
+	padding-right:    var(--media-wall-scrollbar-gap);
+	overflow:         auto;
+	scrollbar-gutter: stable;
+	scrollbar-width:  none;
+	outline:          none;
+}
+
+.scrollContainer::-webkit-scrollbar {
+	display: none;
+}
+
+.pixiLayer {
+	position:   sticky;
+	top:        0;
+	z-index:    1;
+	width:    calc(100% - var(--media-wall-scrollbar-reserve));
+	min-height: 1px;
+	overflow: visible;
+}
+
+.hoveringItem {
+	cursor: pointer;
+}
+
+.projectorOverlayViewport {
+	position:       absolute;
+	top:            0;
+	left:           0;
+	z-index:        5;
+	width:          calc(100% - var(--media-wall-scrollbar-reserve));
+	pointer-events: none;
+	overflow:       visible;
+}
+
+.projectorOverlayLayer {
+	/* Keep fallbacks on the same node that receives the per-card values. Defining
+	 * them on the anchor would shadow the edge-aware offset instead of inheriting it. */
+	--projector-tracking-menu-width:  192px;
+	--projector-tracking-menu-offset: -50%;
+	position:       absolute;
+	pointer-events: none;
+	overflow:       visible;
+}
+
+.projectorTrackingAnchor {
+	position:                 absolute;
+	left:                     50%;
+	bottom:                   9px;
+	z-index:                  4;
+	width:                    68px;
+	transform:                translateX(-50%);
+	--tracking-status-height: 34px;
+	pointer-events:           auto;
+}
+
+.projectorTrackingBridge {
+	position:       absolute;
+	left:           50%;
+	bottom:         34px;
+	z-index:        0;
+	width:     var(--projector-tracking-menu-width);
+	height:         128px;
+	transform: translateX(var(--projector-tracking-menu-offset));
+	pointer-events: auto;
+}
+
+.projectorTrackingMenu {
+	position:       absolute;
+	left:           50%;
+	bottom:         104px;
+	z-index:        1;
+	transform: translateX(var(--projector-tracking-menu-offset));
+	pointer-events: auto;
+}
+
+.projectorTrackingMenu [data-cyber-radio-buttons] {
+	gap:       var(--space-xs);
+	flex-wrap: nowrap;
+}
+
+.projectorTrackingMenu [data-cyber-radio-wrapper] {
+	width:  144px;
+	height: 52px;
+	margin: 2px;
+}
+
+.projectorTrackingMenu [data-cyber-radio-button] {
+	--font-size: 11px;
+	font-family: var(--font-family);
+	line-height: 52px;
+	letter-spacing: 1.2px;
+}
+
+.projectorTrackingMenu [data-cyber-radio-label] {
+	display:   inline-block;
+	max-width: 88%;
+	overflow:  hidden;
+	font-family: var(--font-family);
+	font-size:   14px;
+}
+
+.projectorTrackingMenu [data-cyber-radio-number] {
+	left: 83%;
+}
+
+.virtualSpacer {
+	width:          1px;
+	pointer-events: none;
+}
+
+.visualScrollbar {
+	position:     absolute;
+	top:          0;
+	right: calc(4px - var(--media-wall-scrollbar-extension));
+	z-index:      4;
+	width:        var(--media-wall-scrollbar-width);
+	pointer-events: auto;
+	touch-action: none;
+	cursor:       pointer;
+	background:   rgba(5, 10, 18, 0.58);
+}
+
+.visualScrollbarThumb {
+	width:      100%;
+	min-height: 40px;
+	border:     2px solid rgba(5, 10, 18, 0.72);
+	border-radius: 999px;
+	background: rgba(0, 178, 255, 0.78);
+	box-shadow: inset 0 0 0 1px rgba(213, 247, 255, 0.22);
+	cursor:     grab;
+}
+
+.visualScrollbarThumb:active {
+	cursor: grabbing;
+}
+
+.accessibilityBridge {
+	position:    absolute;
+	width:       1px;
+	height:      1px;
+	padding:     0;
+	margin:      -1px;
+	overflow:    hidden;
+	clip:        rect(0 0 0 0);
+	white-space: nowrap;
+	border:      0;
+}

@@ -1,0 +1,201 @@
+.projectorConsole {
+	--projector-brown: #241812;
+	--projector-brown-dark: #120B08;
+	--projector-brown-warm: #3A261B;
+	--projector-laser: rgba(255, 54, 94, 0.48);
+	position:       relative;
+	display:        inline-flex;
+	flex-direction: column;
+	align-items:    center;
+	min-width:      0;
+	max-width:      100%;
+	padding-top:    2px;
+}
+
+.projectorConsole::after {
+	content:   "";
+	position:  absolute;
+	z-index:   3;
+	left:      50%;
+	top:       100%;
+	/* Disabled hit testing prevents the closed projection from covering page actions below it. */
+	width:     min(760px, calc(100vw - 48px));
+	height:    66px;
+	pointer-events: none;
+	transform: translateX(-50%);
+}
+
+.projectorConsole:hover::after,
+.projectorConsole:focus-within::after {
+	/* Once opened from the projector, the bridge keeps hover alive while crossing to the controls. */
+	pointer-events: auto;
+}
+
+.projectorDevice {
+	position:    relative;
+	width:       142px;
+	height:      36px;
+	display:     flex;
+	align-items: center;
+	justify-content: center;
+	isolation:   isolate;
+	z-index:     4;
+}
+
+.deviceBody {
+	position:   relative;
+	z-index:    2;
+	display:         flex;
+	align-items:     center;
+	justify-content: flex-end;
+	width:           126px;
+	height:          30px;
+	padding-right:   8px;
+	border-radius:   8px 8px 12px 12px;
+	background: linear-gradient(160deg, var(--projector-brown-warm), var(--projector-brown) 48%, var(--projector-brown-dark));
+	box-shadow: inset 0 1px 0 rgba(255, 210, 150, 0.22),
+							inset 0 -5px 10px rgba(0, 0, 0, 0.44),
+							0 2px 0 rgba(0, 0, 0, 0.68),
+							0 0 0 1px rgba(255, 184, 92, 0.18);
+}
+
+.deviceBody::before,
+.deviceBody::after {
+	content:       "";
+	position:      absolute;
+	top:           4px;
+	width:         8px;
+	height:        8px;
+	border-radius: 50%;
+	background:    radial-gradient(circle at 35% 30%, rgba(255, 216, 168, 0.9), rgba(77, 44, 28, 0.95) 58%, rgba(8, 5, 4, 0.98));
+	box-shadow:    0 0 0 1px rgba(0, 0, 0, 0.42);
+}
+
+.deviceBody::before {
+	left: 9px;
+}
+
+.deviceBody::after {
+	right: 9px;
+}
+
+.deviceRidge {
+	position:      absolute;
+	left:  28px;
+	right: 46px;
+	top:   7px;
+	height:        4px;
+	border-radius: 999px;
+	background:    linear-gradient(90deg, transparent, rgba(255, 200, 128, 0.22), transparent);
+	box-shadow:    0 5px 0 rgba(255, 255, 255, 0.04);
+}
+
+.deviceLens {
+	position:      absolute;
+	left:          50%;
+	bottom: -6px;
+	width:         18px;
+	height:        10px;
+	border-radius: 0 0 999px 999px;
+	background:    radial-gradient(circle at 50% 20%, rgba(255, 240, 218, 0.95), rgba(255, 54, 94, 0.98) 38%, rgba(53, 0, 8, 0.98) 80%);
+	box-shadow:    inset 0 1px 1px rgba(255, 255, 255, 0.4),
+								 0 0 12px rgba(255, 54, 94, 0.75),
+								 0 0 24px rgba(255, 54, 94, 0.28);
+	transform:     translateX(-50%);
+}
+
+.deviceIssueButton {
+	--playback-issue-trigger-size:      24px;
+	--playback-issue-trigger-icon-size: 14px;
+	position: relative;
+	z-index:  3;
+	display:  inline-flex;
+}
+
+.laserBeam {
+	position:       absolute;
+	z-index:        1;
+	left:           50%;
+	top:        27px;
+	width:      min(760px, calc(100vw - 48px));
+	height:     72px;
+	pointer-events: none;
+	background:     linear-gradient(180deg, var(--projector-laser), rgba(255, 54, 94, 0.18) 58%, transparent);
+	clip-path:      polygon(49% 0, 51% 0, 100% 100%, 0 100%);
+	filter:         blur(2px);
+	opacity:    0;
+	transform:      translateX(-50%);
+	transition: opacity 130ms ease;
+}
+
+.controlsDeck {
+	/* Projected controls must read as bare light content, never as a card or panel. */
+	position:       absolute;
+	z-index:        5;
+	/* The projector trail reaches the controls 40px below their original position. */
+	top:            calc(100% + 58px);
+	left:           50%;
+	display:         flex;
+	align-items:     center;
+	justify-content: center;
+	width:          max-content;
+	max-width:      calc(100vw - 48px);
+	opacity:        0;
+	pointer-events: none;
+	transform:      translate(-50%, -4px);
+	transition:     opacity 130ms ease, transform 130ms ease;
+}
+
+.projectorConsole:hover .laserBeam,
+.projectorConsole:focus-within .laserBeam {
+	opacity: 1;
+}
+
+.projectorConsole:hover .controlsDeck,
+.projectorConsole:focus-within .controlsDeck {
+	opacity:        1;
+	pointer-events: auto;
+	transform:      translate(-50%, 0);
+}
+
+.trackingButtons {
+	min-width: 0;
+}
+
+.trackingButtons [data-cyber-radio-buttons] {
+	flex-wrap: nowrap;
+}
+
+.trackingButtons [data-cyber-radio-wrapper] {
+	width:  clamp(124px, 18vw, 144px);
+	height: 52px;
+	margin: 2px;
+}
+
+.trackingButtons [data-cyber-radio-button] {
+	--font-size: 10px;
+	line-height: 52px;
+	letter-spacing: 1.2px;
+}
+
+.trackingButtons [data-cyber-radio-label] {
+	display:   inline-block;
+	max-width: 88%;
+	overflow:  hidden;
+}
+
+.trackingButtons [data-cyber-radio-number] {
+	left: 83%;
+}
+
+@media (max-width: 720px) {
+	.controlsDeck {
+		align-items: center;
+		overflow-x: auto;
+		width:      calc(100vw - 32px);
+	}
+
+	.trackingButtons [data-cyber-radio-wrapper] {
+		width: 124px;
+	}
+}

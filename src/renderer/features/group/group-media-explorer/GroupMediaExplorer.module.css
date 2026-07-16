@@ -1,0 +1,140 @@
+.wrapper {
+	display:        flex;
+	flex-direction: column;
+	gap:            var(--space-md);
+	padding:        var(--space-lg);
+	height:     100%;
+	min-height: 0;
+}
+
+.headerActions {
+	display:     inline-flex;
+	align-items: center;
+	gap:         var(--space-sm);
+}
+
+.gridShell {
+	position:   relative;
+	flex:       1;
+	min-height: 0;
+	display:    flex;
+}
+
+.gridHoloViewport {
+	flex: 1 1 auto;
+}
+
+.gridHoloViewportContent {
+	min-height: 0;
+}
+
+.gridHoloScrollSurface.gridHoloScrollSurface {
+	--media-wall-scrollbar-extension: 0px;
+	width:                            100%;
+	margin-right:                     0;
+}
+
+.stateOverlay {
+	--group-media-state-overlay-bg: var(--background-color);
+	position:        absolute;
+	inset:           0;
+	z-index:         3;
+	display:         flex;
+	align-items:     center;
+	justify-content: center;
+	padding:         var(--space-lg);
+	background:                     color-mix(in srgb, var(--group-media-state-overlay-bg) 72%, transparent);
+}
+
+.undoToast {
+	width:      fit-content !important;
+	min-width:  0 !important;
+	padding:    0 !important;
+	background: transparent !important;
+	box-shadow: none !important;
+}
+
+.undoToast:global(.ant-notification-notice),
+.undoToast :global(.ant-notification-notice) {
+	width:      auto !important;
+	min-width:  0 !important;
+	padding:    0 !important;
+	background: transparent !important;
+	box-shadow: none !important;
+}
+
+.undoToast :global(.ant-notification-notice-content) {
+	margin:  0 !important;
+	padding: 0 !important;
+}
+
+.undoToast :global(.ant-notification-notice-message) {
+	margin:             0 !important;
+	padding:            0 !important;
+	padding-inline-end: 0 !important;
+}
+
+.undoToast :global(.ant-notification-notice-description) {
+	display: none;
+}
+
+.undoToast :global(.ant-notification-notice-close) {
+	display:        none !important;
+	width:          0 !important;
+	height:         0 !important;
+	margin:         0 !important;
+	padding:        0 !important;
+	opacity:        0 !important;
+	pointer-events: none !important;
+}
+
+.undoToastHiddenClose {
+	display: none !important;
+}
+
+.undoToastButton {
+	display:       inline-flex;
+	align-items:   center;
+	gap:           var(--space-xs);
+	padding:       6px 10px;
+	border:        1px solid rgba(0, 225, 255, 0.38);
+	border-radius: 999px;
+	background:    rgba(5, 24, 38, 0.76);
+	color:         var(--text-color-heading);
+	box-shadow:    0 0 14px rgba(0, 178, 255, 0.22);
+	cursor:        pointer;
+	font-size:     var(--font-size-sm);
+	font-weight:   600;
+}
+
+.undoToastProgress {
+	--undo-duration: 5s;
+	width:           18px;
+	height:          18px;
+	transform:       rotate(-90deg);
+}
+
+.undoToastProgressTrack,
+.undoToastProgressValue {
+	fill:         none;
+	stroke-width: 2.4;
+}
+
+.undoToastProgressTrack {
+	stroke: rgba(0, 225, 255, 0.16);
+}
+
+.undoToastProgressValue {
+	stroke:            rgba(0, 225, 255, 0.94);
+	stroke-linecap:    round;
+	stroke-dasharray:  44;
+	stroke-dashoffset: 0;
+	filter:            drop-shadow(0 0 4px rgba(0, 178, 255, 0.5));
+	animation:         undo-countdown var(--undo-duration, 5s) linear forwards;
+}
+
+@keyframes undo-countdown {
+	to {
+		stroke-dashoffset: 44;
+	}
+}

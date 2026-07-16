@@ -1,0 +1,405 @@
+.modal :global(.ant-modal-content) {
+	background: linear-gradient(160deg, rgba(12, 20, 34, 0.98), rgba(8, 14, 24, 0.96));
+	border:     var(--modal-border);
+	box-shadow: var(--modal-shadow);
+}
+
+.modal :global(.ant-modal-body) {
+	display:        flex;
+	flex-direction: column;
+	gap:            var(--space-lg);
+	min-height: min(72vh, 720px);
+}
+
+.preferencesLayout {
+	display:               grid;
+	grid-template-columns: 180px minmax(0, 1fr);
+	gap:                   var(--space-lg);
+	min-height:            min(72vh, 720px);
+}
+
+.sectionMenu {
+	border:        var(--panel-dashed-border);
+	border-radius: var(--border-radius-lg);
+	background:    var(--panel-muted-bg);
+	padding-block: var(--space-sm);
+}
+
+.sectionMenu :global(.ant-menu) {
+	background: transparent;
+}
+
+.sectionMenu :global(.ant-menu-item) {
+	margin-inline: var(--space-xs);
+	width:         calc(100% - (var(--space-xs) * 2));
+}
+
+.section {
+	border:        var(--panel-dashed-border);
+	border-radius: var(--border-radius-lg);
+	padding:       var(--space-lg);
+	background:    var(--panel-muted-bg);
+	min-width:  0;
+	overflow-y: auto;
+}
+
+.settingRow {
+	display:         flex;
+	align-items:     center;
+	justify-content: space-between;
+	gap:             var(--space-lg);
+	padding-block:   var(--space-sm);
+}
+
+.settingRow + .settingRow {
+	border-top: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.settingColumn {
+	display:        flex;
+	flex-direction: column;
+	gap:            var(--space-md);
+}
+
+.settingDivider {
+	height:     1px;
+	background: rgba(255, 255, 255, 0.06);
+}
+
+.settingCopy {
+	display:        flex;
+	flex-direction: column;
+	gap:            var(--space-xs);
+}
+
+.settingLabel {
+	font-size: var(--font-size-lg);
+	color:     var(--text-color-heading);
+}
+
+.settingHint {
+	font-size: var(--font-size-sm);
+	color:     var(--text-color-tertiary);
+}
+
+.backgroundSelect {
+	min-width: 180px;
+}
+
+.providerGrid {
+	display:        flex;
+	flex-direction: column;
+	gap:            var(--space-sm);
+}
+
+.providerItem {
+	display:        flex;
+	flex-direction: column;
+	gap:            var(--space-xs);
+	min-width:      0;
+	padding:        var(--space-xs) var(--space-sm);
+	border:         var(--panel-border);
+	border-radius:  var(--border-radius-sm);
+	background:     var(--panel-bg);
+}
+
+.providerRow {
+	display:         flex;
+	align-items:     center;
+	justify-content: space-between;
+	flex-wrap:       wrap;
+	gap:             var(--space-sm);
+	min-width:       0;
+}
+
+.providerDetails {
+	display:        flex;
+	flex-direction: column;
+	gap:            2px;
+	min-width:      min(180px, 100%);
+}
+
+.providerName {
+	color:         var(--text-color-heading);
+	font-size:     var(--font-size-sm);
+	font-weight:   600;
+	overflow-wrap: anywhere;
+}
+
+.providerActions {
+	display:     flex;
+	align-items: center;
+	gap:         var(--space-xs);
+	margin-left: auto;
+}
+
+.providerCategoryField {
+	display:               grid;
+	grid-template-columns: minmax(0, 1fr) auto;
+	gap:                   var(--space-xs);
+	align-items:           center;
+	min-width:             0;
+}
+
+.providerCategoryHelp {
+	color:     var(--text-color-tertiary);
+	font-size: var(--font-size-md);
+}
+
+.providerForm {
+	display:        flex;
+	flex-direction: column;
+	gap:            var(--space-sm);
+	padding:        var(--space-sm);
+	border:         var(--panel-dashed-border);
+	border-radius:  var(--border-radius-md);
+	background:     var(--panel-bg);
+}
+
+.providerFormActions {
+	display:         flex;
+	justify-content: flex-end;
+	gap:             var(--space-sm);
+	flex-wrap:       wrap;
+}
+
+.externalTrackingExportProgress {
+	display:         flex;
+	justify-content: flex-end;
+	align-items:     center;
+	gap:             var(--space-xs);
+	color:           var(--text-color-secondary);
+	font-size:       var(--font-size-sm);
+}
+
+.externalTrackingExportInfo {
+	display: inline-flex;
+	color:   var(--text-color-tertiary);
+	cursor:  help;
+}
+
+.externalTrackingInfoRow {
+	display:         flex;
+	justify-content: flex-end;
+}
+
+.externalTrackingInfoButton {
+	color: var(--text-color-tertiary);
+}
+
+.externalTrackingStorageFooter {
+	margin-top: auto;
+}
+
+.externalTrackingStorageSafe {
+	border-color: rgba(83, 255, 177, 0.36);
+	background:   rgba(24, 146, 89, 0.22);
+}
+
+.externalTrackingStorageSafe :global(.ant-alert-message),
+.externalTrackingStorageSafe :global(.ant-alert-icon) {
+	color: #9AF7C9;
+}
+
+.externalTrackingStorageAccess {
+	border-color: rgba(77, 170, 255, 0.42);
+	background:   rgba(31, 104, 176, 0.22);
+}
+
+.externalTrackingStorageAccess :global(.ant-alert-message),
+.externalTrackingStorageAccess :global(.ant-alert-description),
+.externalTrackingStorageAccess :global(.ant-alert-icon) {
+	color: var(--text-color);
+}
+
+.externalTrackingStorageWarning {
+	border-color: rgba(247, 211, 95, 0.42);
+	background:   rgba(159, 117, 24, 0.22);
+}
+
+.externalTrackingStorageWarning :global(.ant-alert-message),
+.externalTrackingStorageWarning :global(.ant-alert-icon) {
+	color: #F7D35F;
+}
+
+.externalTrackingSection {
+	min-height: 100%;
+}
+
+.externalTrackingProviders {
+	display:        flex;
+	flex-direction: column;
+	gap:            var(--space-sm);
+	background:     transparent;
+}
+
+.externalTrackingProvider {
+	position:      relative;
+	overflow:      hidden;
+	border:        var(--panel-border);
+	border-radius: var(--border-radius-sm);
+	background:    var(--panel-bg);
+	transition:    border-color 160ms ease, box-shadow 160ms ease;
+}
+
+.externalTrackingProviderLast {
+	/* Ant Collapse resets the final item chrome; keep the last provider visually self-contained. */
+	border-bottom:              var(--panel-border) !important;
+	border-bottom-left-radius:  var(--border-radius-lg) !important;
+	border-bottom-right-radius: var(--border-radius-lg) !important;
+}
+
+.externalTrackingProviderLast:not(:global(.ant-collapse-item-active)) > :global(.ant-collapse-header) {
+	/* The collapsed header is the visible bottom surface, so it needs its own radius. */
+	border-bottom-left-radius:  var(--border-radius-lg) !important;
+	border-bottom-right-radius: var(--border-radius-lg) !important;
+}
+
+.externalTrackingProviderLast:global(.ant-collapse-item-active) > :global(.ant-collapse-content) {
+	border-bottom-left-radius:  var(--border-radius-lg) !important;
+	border-bottom-right-radius: var(--border-radius-lg) !important;
+}
+
+.externalTrackingProvider :global(.ant-collapse-header) {
+	align-items: center !important;
+	padding:     var(--space-sm) var(--space-md) !important;
+}
+
+.externalTrackingProvider :global(.ant-collapse-content) {
+	border-top: 1px solid rgba(255, 255, 255, 0.06);
+	background: transparent;
+}
+
+.externalTrackingProvider :global(.ant-collapse-content-box) {
+	padding: var(--space-md) !important;
+}
+
+.externalTrackingProviderHeader {
+	display:     flex;
+	align-items: center;
+	gap:         var(--space-sm);
+	min-width:   0;
+}
+
+.externalTrackingToggleSlot {
+	display:     flex;
+	align-items: center;
+}
+
+.externalTrackingPanelBody {
+	display:        flex;
+	flex-direction: column;
+	gap:            var(--space-sm);
+}
+
+.externalTrackingProviderZapped {
+	border-color: rgba(56, 255, 211, 0.82);
+	box-shadow:   0 0 18px rgba(56, 255, 211, 0.28), inset 0 0 18px rgba(56, 255, 211, 0.08);
+}
+
+.externalTrackingProviderZapped::after {
+	content:        "";
+	position:       absolute;
+	inset:          -30% -10%;
+	pointer-events: none;
+	background:     linear-gradient(110deg, transparent 20%, rgba(56, 255, 211, 0.42) 46%, rgba(247, 211, 95, 0.56) 50%, transparent 58%);
+	transform:      translateX(-80%);
+	animation:      externalTrackingZap 500ms ease-out forwards;
+}
+
+.externalTrackingToggleZapped {
+	filter: drop-shadow(0 0 12px rgba(56, 255, 211, 0.78)) drop-shadow(0 0 8px rgba(247, 211, 95, 0.7));
+}
+
+.externalTrackingMeta {
+	display:        flex;
+	flex-direction: column;
+	gap:            2px;
+	color:          var(--text-color-tertiary);
+	font-size:      var(--font-size-sm);
+}
+
+@keyframes externalTrackingZap {
+	0% {
+		opacity:   0;
+		transform: translateX(-80%) skewX(-12deg);
+	}
+	18% {
+		opacity: 1;
+	}
+	100% {
+		opacity:   0;
+		transform: translateX(80%) skewX(-12deg);
+	}
+}
+
+.appUpdateCard {
+	display:        flex;
+	flex-direction: column;
+	gap:            var(--space-md);
+	padding:        var(--space-md);
+	border:         var(--panel-border);
+	border-radius:  var(--border-radius-md);
+	background:     var(--panel-bg);
+}
+
+.appVersionGrid {
+	display:               grid;
+	grid-template-columns: repeat(2, minmax(0, 1fr));
+	gap:                   var(--space-md);
+}
+
+.appVersionLabel {
+	color:          var(--text-color-tertiary);
+	font-size:      var(--font-size-sm);
+	text-transform: uppercase;
+	letter-spacing: 0.08em;
+}
+
+.appVersionValue {
+	color:       var(--text-color-heading);
+	font-size:   var(--font-size-xl);
+	font-weight: 700;
+}
+
+.rightsDisclosure {
+	border:        var(--panel-border);
+	border-radius: var(--border-radius-md);
+	background:    var(--panel-bg);
+}
+
+.rightsDisclosureSummary {
+	padding:     var(--space-md);
+	color:       var(--text-color-heading);
+	font-size:   var(--font-size-lg);
+	font-weight: 600;
+	cursor:      pointer;
+}
+
+.rightsDisclosureSummary:focus-visible {
+	outline:        2px solid var(--color-primary);
+	outline-offset: -2px;
+}
+
+.rightsBlock {
+	display:        flex;
+	flex-direction: column;
+	gap:            var(--space-xs);
+	padding: 0 var(--space-md) var(--space-md);
+	color:          var(--text-color-secondary);
+}
+
+.rightsBlock p {
+	margin: 0;
+}
+
+@media (max-width: 800px) {
+	.preferencesLayout {
+		grid-template-columns: 1fr;
+	}
+
+	.appVersionGrid {
+		grid-template-columns: 1fr;
+	}
+
+}

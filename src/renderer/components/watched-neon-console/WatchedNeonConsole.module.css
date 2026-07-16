@@ -1,0 +1,144 @@
+.console {
+	position: relative;
+	display: inline-flex;
+	width:   fit-content;
+	max-width: 100%;
+}
+
+.watched,
+.partial,
+.unwatched,
+.connected,
+.disconnected {
+	display: inline-flex;
+}
+
+.powerControl {
+	position: relative;
+	display:  inline-flex;
+	align-items: center;
+	gap:      6px;
+	width:    fit-content;
+	max-width: 100%;
+	cursor:   pointer;
+	user-select: none;
+}
+
+.powerControlDisabled {
+	cursor: not-allowed;
+	opacity: 0.62;
+}
+
+.powerInput {
+	position: absolute;
+	width:  1px;
+	height: 1px;
+	margin: -1px;
+	overflow: hidden;
+	clip:   rect(0 0 0 0);
+	opacity: 0;
+}
+
+.powerButton {
+	position:   relative;
+	display:    inline-grid;
+	place-items: center;
+	flex:       0 0 auto;
+	width:      24px;
+	height:     24px;
+	border-radius: 50%;
+	background: radial-gradient(circle at 32% 26%, rgba(255, 255, 255, 0.08), transparent 28%),
+							linear-gradient(145deg, #25292B, #111314 62%, #08090A);
+	box-shadow: 3px 3px 6px rgba(0, 0, 0, 0.82),
+							-2px -2px 5px rgba(70, 76, 78, 0.5),
+							inset 0 1px 1px rgba(255, 255, 255, 0.06),
+							inset 0 -4px 8px rgba(0, 0, 0, 0.46);
+	transition: box-shadow 150ms ease,
+							transform 150ms ease,
+							background 180ms ease;
+}
+
+.powerButton::before {
+	content:  "";
+	position: absolute;
+	inset:    3px;
+	border-radius: inherit;
+	background: radial-gradient(circle at 50% 52%, rgba(0, 0, 0, 0.14), transparent 58%);
+	box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.035);
+}
+
+.powerButton::after {
+	content:  "";
+	position: absolute;
+	inset:    -4px;
+	border-radius: inherit;
+	background: currentColor;
+	filter:   blur(8px);
+	opacity:  0;
+	transition: opacity 180ms ease;
+	z-index:  -1;
+}
+
+.powerIcon {
+	position:   relative;
+	width:      14px;
+	height:     14px;
+	fill:       #264D39;
+	filter:     drop-shadow(0 1px 1px rgba(0, 0, 0, 0.82));
+	transition: fill 150ms ease,
+							filter 180ms ease;
+	z-index:    1;
+}
+
+.powerControl:active .powerButton {
+	transform:  translate(1px, 1px);
+	box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.9),
+							-1px -1px 3px rgba(62, 68, 70, 0.42),
+							inset 0 1px 3px rgba(0, 0, 0, 0.46);
+}
+
+.powerInput:focus-visible + .powerButton {
+	outline: 2px solid var(--neon-blue);
+	outline-offset: 3px;
+}
+
+.watchedSign {
+	position: relative;
+	display: inline-flex;
+	align-items: center;
+	width:   112px;
+	height:  24px;
+	overflow: visible;
+}
+
+.watchedCanvas {
+	display: block;
+	width: 112px;
+	height: 24px;
+}
+
+.powerControlOn {
+	color: #00FF7B;
+}
+
+.powerControlOn .powerButton {
+	background: radial-gradient(circle at 32% 26%, rgba(255, 255, 255, 0.12), transparent 28%),
+							linear-gradient(145deg, #282F2D, #141918 62%, #080A09);
+	box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.78),
+							-2px -2px 4px rgba(63, 72, 68, 0.48),
+							inset 0 1px 1px rgba(255, 255, 255, 0.075),
+							inset 0 -4px 8px rgba(0, 0, 0, 0.42);
+}
+
+.powerControlOn .powerButton::after {
+	opacity: 0.16;
+}
+
+.powerControlOn .powerIcon {
+	fill:   #00FF7B;
+	filter: drop-shadow(0 0 2px rgba(0, 255, 123, 0.72)) drop-shadow(0 0 6px rgba(0, 255, 123, 0.34));
+}
+
+.powerControlOff {
+	color: #264D39;
+}

@@ -1,13 +1,27 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Vite + React</title>
-  </head>
-  <body>
-    <div id="root"></div>
-    <script type="module" src="/src/main.jsx"></script>
-  </body>
+<head>
+	<meta charset="UTF-8"/>
+	<meta
+		content="default-src 'self'; script-src 'self' http://localhost:5173; connect-src 'self' http://localhost:5173 ws://localhost:5173; style-src 'self' 'unsafe-inline'; img-src 'self' https: data: blob: nimlat-image:;"
+		http-equiv="Content-Security-Policy"
+	>
+	<link
+		href="/vite.svg"
+		rel="icon"
+		type="image/svg+xml"
+	/>
+	<meta
+		content="width=device-width, initial-scale=1.0"
+		name="viewport"
+	/>
+	<title>Nimlat</title>
+</head>
+<body>
+<div id="root"></div>
+<script
+	src="/src/renderer/main.tsx"
+	type="module"
+></script>
+</body>
 </html>

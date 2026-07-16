@@ -1,0 +1,12 @@
+export const KEY_USER_DB_ADULT_CONTENT              = "isAdultContentEnabled";
+export const KEY_USER_DB_ADMIN_MODE                 = "adminMode";
+export const KEY_USER_DB_ANIME_DB_VERSION           = "animeDbVersion";
+export const KEY_USER_DB_BACKGROUND_STYLE           = "backgroundStyle";
+export const KEY_USER_DB_CANVAS_DIAGNOSTICS_ENABLED = "canvasDiagnosticsEnabled";
+export const KEY_USER_DB_DEV_MODE                   = "devMode";
+export const KEY_USER_DB_DEBUGGING_ENABLED          = "debuggingEnabled";
+export const KEY_USER_DB_DOWNLOAD_SEARCH_DEFAULTS_SEEDED = "downloadSearchDefaultsSeeded";
+export const KEY_USER_DB_LIBRARY_DISPLAY_FILTERS    = "libraryDisplayFilters";
+export const KEY_USER_DB_LAST_ROUTE                 = "lastRoute";
+export const KEY_USER_DB_PREFERRED_TITLE_LANGUAGE   = "preferredTitleLanguage";
+export const KEY_USER_DB_WINDOW_BOUNDS              = "windowBounds";

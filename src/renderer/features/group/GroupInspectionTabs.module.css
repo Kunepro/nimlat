@@ -1,0 +1,9 @@
+.tabs :global(.ant-tabs-nav) {
+	padding-left:  var(--space-lg);
+	padding-right: var(--space-lg);
+	margin-bottom: 0;
+}
+
+.tabs :global(.ant-tabs-nav)::before {
+	border-bottom: 0;
+}
