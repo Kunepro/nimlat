@@ -559,6 +559,7 @@ export function registerTerminalHarnessTests(context: NimlatE2ETestContext): voi
 					electronApp,
 					target.kind,
 					{
+						show:   true,
 						width:  800,
 						height: 480,
 					},
