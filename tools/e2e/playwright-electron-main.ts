@@ -75,6 +75,7 @@ interface E2EPaths {
 interface E2ECommands {
 	openWindow: (kind: "base" | "library" | "episode-status" | "media-wall-stress", options?: {
 		search?: string;
+		show?: boolean;
 		width?: number;
 		height?: number;
 	}) => Promise<number>;
@@ -453,6 +454,7 @@ async function createHiddenWindow(
 	htmlPath: string,
 	options?: {
 		search?: string;
+		show?: boolean;
 		width?: number;
 		height?: number;
 	},
@@ -472,6 +474,11 @@ async function createHiddenWindow(
 		htmlPath,
 		options?.search ? { search: options.search } : undefined,
 	);
+	// Chromium can evaluate an unmapped window while its screenshot compositor remains unavailable
+	// under Xvfb. Visual smoke tests opt in to mapping only the window they need to capture.
+	if (options?.show) {
+		window.show();
+	}
 	return window;
 }
 
