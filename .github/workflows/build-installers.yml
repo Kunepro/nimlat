@@ -26,16 +26,19 @@ jobs:
           - label: Windows x64 (NSIS)
             runner: windows-2025
             script: win
+            args: --x64 --publish never
             artifact-name: nimlat-windows-x64
             artifact-path: release/*.exe
           - label: Linux x64 (AppImage)
             runner: ubuntu-24.04
             script: linux
+            args: --x64 --publish never
             artifact-name: nimlat-linux-x64
             artifact-path: release/*.AppImage
           - label: macOS x64 (DMG and ZIP)
             runner: macos-15-intel
             script: mac
+            args: dmg zip --x64 --publish never
             artifact-name: nimlat-macos-x64
             artifact-path: |
               release/*.dmg
@@ -60,9 +63,9 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      # Native modules are rebuilt on their target OS; --x64 prevents configured secondary arches.
+      # Explicit macOS target names make the CLI x64 selection override configured multi-arch targets.
       - name: Package installer
-        run: npm run package:${{ matrix.script }} -- --x64 --publish never
+        run: npm run package:${{ matrix.script }} -- ${{ matrix.args }}
 
       - name: Upload installer artifact
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
