@@ -531,9 +531,6 @@ export function registerTerminalHarnessTests(context: NimlatE2ETestContext): voi
 	test(
 		"minimum 800x480 mounted harnesses render usable nonblank surfaces",
 		async () => {
-			// Xvfb uses software rendering in CI, so capturing the 20k-item stress wall can exceed
-			// Playwright's 30-second screenshot default even after the renderer is demonstrably ready.
-			test.setTimeout(120_000);
 			const electronApp = context.getElectronApp();
 			const targets     = [
 				{
@@ -562,6 +559,7 @@ export function registerTerminalHarnessTests(context: NimlatE2ETestContext): voi
 					electronApp,
 					target.kind,
 					{
+						show:   true,
 						width:  800,
 						height: 480,
 					},
@@ -600,9 +598,7 @@ export function registerTerminalHarnessTests(context: NimlatE2ETestContext): voi
 					expect(metrics.wallWidth).toBeGreaterThanOrEqual(720);
 					expect(metrics.wallHeight).toBeGreaterThanOrEqual(320);
 
-					const screenshot = await opened.page.screenshot({
-						timeout: 60_000,
-					});
+					const screenshot = await opened.page.screenshot();
 					expect(countDistinctScreenshotColors(screenshot)).toBeGreaterThanOrEqual(16);
 				} finally {
 					await runMainCommand(

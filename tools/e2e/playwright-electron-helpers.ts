@@ -42,6 +42,7 @@ export type HarnessWindowKind = "base" | "library" | "episode-status" | "media-w
 
 export interface HarnessWindowOptions {
 	search?: string;
+	show?: boolean;
 	width?: number;
 	height?: number;
 }
