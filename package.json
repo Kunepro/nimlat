@@ -58,9 +58,10 @@
 		"extraResources": [],
 		"publish":        [
 			{
-				"provider": "github",
-				"owner":    "Kunepro",
-				"repo":     "nimlat"
+				"provider":    "github",
+				"owner":       "Kunepro",
+				"repo":        "nimlat",
+				"releaseType": "draft"
 			}
 		],
 		"mac":            {

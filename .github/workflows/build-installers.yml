@@ -1,23 +1,89 @@
-name: Build x64 installers
-run-name: Build x64 installers from ${{ github.ref_name }}
+name: Build draft release
+run-name: Build draft release from ${{ github.ref_name }}
 
 on:
   workflow_dispatch:
 
-# Packaging reads the selected ref and stores workflow artifacts; it never publishes a release.
 permissions:
   contents: read
 
-# Avoid competing native dependency rebuilds for the same ref while preserving every manual run.
+# A version owns one mutable draft; concurrent runs would otherwise replace the same release assets.
 concurrency:
-  group: build-x64-installers-${{ github.ref }}
+  group: build-draft-release-${{ github.ref }}
   cancel-in-progress: false
 
 jobs:
+  prepare-release:
+    name: Validate release source
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+
+    permissions:
+      contents: write
+
+    outputs:
+      version: ${{ steps.release.outputs.version }}
+      tag: ${{ steps.release.outputs.tag }}
+
+    steps:
+      - name: Check out source
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      # Drafts are versioned from package.json and may only represent the protected release branch.
+      - name: Resolve release identity
+        id: release
+        shell: bash
+        run: |
+          if [[ "${GITHUB_REF}" != "refs/heads/master" ]]; then
+            echo "Draft releases must be built from master, received ${GITHUB_REF}." >&2
+            exit 1
+          fi
+
+          version="$(node -p "require('./package.json').version")"
+          if [[ ! "${version}" =~ ^[0-9]+\.[0-9]+\.[0-9]+([+-][0-9A-Za-z.-]+)?$ ]]; then
+            echo "package.json contains an unsupported release version: ${version}" >&2
+            exit 1
+          fi
+
+          echo "version=${version}" >> "${GITHUB_OUTPUT}"
+          echo "tag=v${version}" >> "${GITHUB_OUTPUT}"
+
+      # A rerun refreshes the same mutable draft but never modifies an already published release.
+      - name: Create or refresh draft release
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_REPO: ${{ github.repository }}
+          RELEASE_TAG: ${{ steps.release.outputs.tag }}
+          RELEASE_VERSION: ${{ steps.release.outputs.version }}
+        shell: bash
+        run: |
+          if gh release view "${RELEASE_TAG}" >/dev/null 2>&1; then
+            if [[ "$(gh release view "${RELEASE_TAG}" --json isDraft --jq '.isDraft')" != "true" ]]; then
+              echo "${RELEASE_TAG} is already published; bump package.json before building another draft." >&2
+              exit 1
+            fi
+            gh release edit "${RELEASE_TAG}" \
+              --draft \
+              --target "${GITHUB_SHA}" \
+              --title "Nimlat ${RELEASE_VERSION}"
+          else
+            gh release create "${RELEASE_TAG}" \
+              --draft \
+              --target "${GITHUB_SHA}" \
+              --title "Nimlat ${RELEASE_VERSION}" \
+              --generate-notes
+          fi
+
   package:
     name: ${{ matrix.label }}
+    needs: prepare-release
     runs-on: ${{ matrix.runner }}
     timeout-minutes: 45
+
+    permissions:
+      contents: write
 
     strategy:
       fail-fast: false
@@ -26,23 +92,19 @@ jobs:
           - label: Windows x64 (NSIS)
             runner: windows-2025
             script: win
-            args: --x64 --publish never
-            artifact-name: nimlat-windows-x64
-            artifact-path: release/*.exe
+            node-architecture: x64
+            args: --x64
           - label: Linux x64 (AppImage)
             runner: ubuntu-24.04
             script: linux
-            args: --x64 --publish never
-            artifact-name: nimlat-linux-x64
-            artifact-path: release/*.AppImage
-          - label: macOS x64 (DMG and ZIP)
+            node-architecture: x64
+            args: --x64
+          # One invocation keeps x64 and ARM64 update metadata consistent in latest-mac.yml.
+          - label: macOS x64 and ARM64 (DMG and ZIP)
             runner: macos-15-intel
             script: mac
-            args: dmg zip --x64 --publish never
-            artifact-name: nimlat-macos-x64
-            artifact-path: |
-              release/*.dmg
-              release/*.zip
+            node-architecture: x64
+            args: ""
 
     env:
       CI: true
@@ -57,21 +119,72 @@ jobs:
         uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
         with:
           node-version: 24
-          architecture: x64
+          architecture: ${{ matrix.node-architecture }}
           cache: npm
 
       - name: Install dependencies
         run: npm ci
 
-      # Explicit macOS target names make the CLI x64 selection override configured multi-arch targets.
-      - name: Package installer
-        run: npm run package:${{ matrix.script }} -- ${{ matrix.args }}
+      # electron-builder creates or updates v<package version> as a draft and uploads assets directly.
+      - name: Package and upload release assets
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: npm run package:${{ matrix.script }} -- ${{ matrix.args }} --publish always
 
-      - name: Upload installer artifact
-        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
-        with:
-          name: ${{ matrix.artifact-name }}
-          path: ${{ matrix.artifact-path }}
-          if-no-files-found: error
-          retention-days: 30
-          compression-level: 0
+  verify-release:
+    name: Verify draft release
+    needs:
+      - prepare-release
+      - package
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+
+    permissions:
+      contents: read
+
+    env:
+      GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      GH_REPO: ${{ github.repository }}
+      RELEASE_TAG: ${{ needs.prepare-release.outputs.tag }}
+      RELEASE_VERSION: ${{ needs.prepare-release.outputs.version }}
+
+    steps:
+      # Publishing remains a deliberate UI action after every expected installer and updater file exists.
+      - name: Verify draft and required assets
+        shell: bash
+        run: |
+          if [[ "$(gh release view "${RELEASE_TAG}" --json isDraft --jq '.isDraft')" != "true" ]]; then
+            echo "${RELEASE_TAG} is not a draft release." >&2
+            exit 1
+          fi
+
+          asset_names="$(gh release view "${RELEASE_TAG}" --json assets --jq '.assets[].name')"
+          expected_assets=(
+            "Nimlat-${RELEASE_VERSION}-x64.exe"
+            "Nimlat-${RELEASE_VERSION}-x86_64.AppImage"
+            "Nimlat-${RELEASE_VERSION}-x64.dmg"
+            "Nimlat-${RELEASE_VERSION}-x64.zip"
+            "Nimlat-${RELEASE_VERSION}-arm64.dmg"
+            "Nimlat-${RELEASE_VERSION}-arm64.zip"
+            "latest.yml"
+            "latest-linux.yml"
+            "latest-mac.yml"
+          )
+
+          missing=0
+          for asset in "${expected_assets[@]}"; do
+            if ! grep -Fxq "${asset}" <<< "${asset_names}"; then
+              echo "Missing draft release asset: ${asset}" >&2
+              missing=1
+            fi
+          done
+          if (( missing != 0 )); then
+            exit 1
+          fi
+
+          release_url="$(gh release view "${RELEASE_TAG}" --json url --jq '.url')"
+          {
+            echo "## Draft release ready"
+            echo
+            echo "[Open ${RELEASE_TAG}](${release_url}) to download, inspect, and publish the release."
+          } >> "${GITHUB_STEP_SUMMARY}"
