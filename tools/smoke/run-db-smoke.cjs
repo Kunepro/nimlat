@@ -6,11 +6,8 @@ const {
 			}             = require("node:fs");
 const { join }      = require("node:path");
 
-/**
- * Run the Electron DB smoke harness in a shell-agnostic way.
- * This avoids Windows/PowerShell differences around inline env assignment like
- * `set FOO=bar&& ...`, while still returning the actual child exit code.
- */
+// Run the Electron DB smoke harness in a shell-agnostic way. This avoids
+// Windows/PowerShell differences while still returning the actual child exit code.
 function main() {
 	const runLogPath = join(
 		process.cwd(),
@@ -24,7 +21,17 @@ function main() {
 			force: true,
 		},
 	);
-	const result = spawnSync(
+	// GitHub's Linux runner cannot install Electron's setuid sandbox helper. Keep
+	// this exception scoped to the CI smoke harness; packaged applications remain sandboxed.
+	const electronArguments = [
+		...(process.env.CI === "true" && process.platform === "linux" ? [ "--no-sandbox" ] : []),
+		join(
+			"tools",
+			"smoke",
+			"electron-entry.cjs",
+		),
+	];
+	const result            = spawnSync(
 		process.execPath,
 		[
 			join(
@@ -32,11 +39,7 @@ function main() {
 				"electron",
 				"cli.js",
 			),
-			join(
-				"tools",
-				"smoke",
-				"electron-entry.cjs",
-			),
+			...electronArguments,
 		],
 		{
 			cwd:   process.cwd(),
