@@ -162,8 +162,8 @@ jobs:
 
           asset_names="$(gh release view "${RELEASE_TAG}" --json assets --jq '.assets[].name')"
           expected_assets=(
-            "Nimlat-${RELEASE_VERSION}-Windows-x64-Setup.exe"
-            "Nimlat-${RELEASE_VERSION}-Windows-x64-Setup.exe.blockmap"
+            "Nimlat-${RELEASE_VERSION}-Windows-x64.exe"
+            "Nimlat-${RELEASE_VERSION}-Windows-x64.exe.blockmap"
             "Nimlat-${RELEASE_VERSION}-Linux-x86_64.AppImage"
             "Nimlat-${RELEASE_VERSION}-macOS-x64.dmg"
             "Nimlat-${RELEASE_VERSION}-macOS-x64.dmg.blockmap"
@@ -189,69 +189,44 @@ jobs:
             exit 1
           fi
 
-          # Asset labels are deliberately more approachable than architecture tokens in filenames.
+          # Keep GitHub's asset list literal: the OS belongs in the filename and no label should hide it.
           release_id="$(gh release view "${RELEASE_TAG}" --json databaseId --jq '.databaseId')"
           release_assets="$(gh api "repos/${GH_REPO}/releases/${release_id}/assets?per_page=100")"
-          label_asset() {
+          clear_asset_label() {
             local asset_name="$1"
-            local asset_label="$2"
             local asset_id
 
             asset_id="$(jq -r --arg name "${asset_name}" '.[] | select(.name == $name) | .id' <<< "${release_assets}")"
             if [[ -z "${asset_id}" ]]; then
-              echo "Cannot label missing release asset: ${asset_name}" >&2
+              echo "Cannot clear label for missing release asset: ${asset_name}" >&2
               exit 1
             fi
             gh api --method PATCH "repos/${GH_REPO}/releases/assets/${asset_id}" \
-              -f "label=${asset_label}" >/dev/null
+              -f 'label=' >/dev/null
           }
 
-          label_asset "Nimlat-${RELEASE_VERSION}-Windows-x64-Setup.exe" "Windows 64-bit installer"
-          label_asset "Nimlat-${RELEASE_VERSION}-Windows-x64-Setup.exe.blockmap" "Windows automatic-update metadata (not an installer)"
-          label_asset "Nimlat-${RELEASE_VERSION}-Linux-x86_64.AppImage" "Linux 64-bit application"
-          label_asset "Nimlat-${RELEASE_VERSION}-macOS-arm64.dmg" "macOS Apple Silicon installer"
-          label_asset "Nimlat-${RELEASE_VERSION}-macOS-arm64.dmg.blockmap" "macOS Apple Silicon update metadata (not an installer)"
-          label_asset "Nimlat-${RELEASE_VERSION}-macOS-arm64.zip" "macOS Apple Silicon automatic-update package"
-          label_asset "Nimlat-${RELEASE_VERSION}-macOS-arm64.zip.blockmap" "macOS Apple Silicon update metadata (not an installer)"
-          label_asset "Nimlat-${RELEASE_VERSION}-macOS-x64.dmg" "macOS Intel installer"
-          label_asset "Nimlat-${RELEASE_VERSION}-macOS-x64.dmg.blockmap" "macOS Intel update metadata (not an installer)"
-          label_asset "Nimlat-${RELEASE_VERSION}-macOS-x64.zip" "macOS Intel automatic-update package"
-          label_asset "Nimlat-${RELEASE_VERSION}-macOS-x64.zip.blockmap" "macOS Intel update metadata (not an installer)"
-          label_asset "latest.yml" "Windows automatic-update manifest (not an installer)"
-          label_asset "latest-linux.yml" "Linux automatic-update manifest (not an installer)"
-          label_asset "latest-mac.yml" "macOS automatic-update manifest (not an installer)"
+          for asset in "${expected_assets[@]}"; do
+            clear_asset_label "${asset}"
+          done
 
-          # Keep generated notes, but replace our managed download guide on idempotent reruns.
+          # Remove the previously managed guide while preserving GitHub's generated release notes.
           existing_notes="$(mktemp)"
           clean_notes="$(mktemp)"
-          release_notes="$(mktemp)"
-          trap 'rm -f "${existing_notes}" "${clean_notes}" "${release_notes}"' EXIT
+          trap 'rm -f "${existing_notes}" "${clean_notes}"' EXIT
           gh release view "${RELEASE_TAG}" --json body --jq '.body' > "${existing_notes}"
-          awk '
-            $0 == "<!-- nimlat-download-guide:start -->" { skip = 1; next }
-            $0 == "<!-- nimlat-download-guide:end -->" { skip = 0; next }
-            !skip { print }
-          ' "${existing_notes}" > "${clean_notes}"
-          {
-            echo '<!-- nimlat-download-guide:start -->'
-            echo '## Download Nimlat'
-            echo
-            echo '| Your computer | File to download |'
-            echo '| --- | --- |'
-            printf '| Windows 64-bit | **Nimlat-%s-Windows-x64-Setup.exe** |\n' "${RELEASE_VERSION}"
-            printf '| Linux 64-bit | **Nimlat-%s-Linux-x86_64.AppImage** |\n' "${RELEASE_VERSION}"
-            printf '| Mac with Apple Silicon | **Nimlat-%s-macOS-arm64.dmg** |\n' "${RELEASE_VERSION}"
-            printf '| Mac with an Intel processor | **Nimlat-%s-macOS-x64.dmg** |\n' "${RELEASE_VERSION}"
-            echo
-            echo 'ZIP, blockmap, and YML files are used by automatic updates and are not installers.'
-            echo '<!-- nimlat-download-guide:end -->'
-            echo
-            cat "${clean_notes}"
-          } > "${release_notes}"
-          gh release edit "${RELEASE_TAG}" --notes-file "${release_notes}"
+          if grep -Fqx '<!-- nimlat-download-guide:start -->' "${existing_notes}"; then
+            awk '
+              $0 == "<!-- nimlat-download-guide:start -->" { skip = 1; next }
+              $0 == "<!-- nimlat-download-guide:end -->" { skip = 0; next }
+              !skip { print }
+            ' "${existing_notes}" > "${clean_notes}"
+            gh release edit "${RELEASE_TAG}" --notes-file "${clean_notes}"
+          fi
 
-          # Remove only known legacy names after all clearer replacements are verified and labelled.
+          # Remove only known legacy names after all OS-qualified replacements are verified.
           legacy_assets=(
+            "Nimlat-${RELEASE_VERSION}-Windows-x64-Setup.exe"
+            "Nimlat-${RELEASE_VERSION}-Windows-x64-Setup.exe.blockmap"
             "Nimlat-${RELEASE_VERSION}-x64.exe"
             "Nimlat-${RELEASE_VERSION}-x64.exe.blockmap"
             "Nimlat-${RELEASE_VERSION}-x86_64.AppImage"
