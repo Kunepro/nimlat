@@ -125,11 +125,73 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      # electron-builder creates or updates v<package version> as a draft and uploads assets directly.
+      # macOS is verified before upload so a broken code seal can never replace the draft assets.
       - name: Package and upload release assets
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: npm run package:${{ matrix.script }} -- ${{ matrix.args }} --publish always
+          PACKAGE_SCRIPT: ${{ matrix.script }}
+        shell: bash
+        run: |
+          if [[ "${PACKAGE_SCRIPT}" == "mac" ]]; then
+            npm run package:mac -- ${{ matrix.args }} --publish never
+          else
+            npm run "package:${PACKAGE_SCRIPT}" -- ${{ matrix.args }} --publish always
+          fi
+
+      # Free macOS distribution still needs a structurally valid ad-hoc signature.
+      # Gatekeeper does not trust it as a Developer ID, but it must never report a damaged code seal.
+      - name: Verify ad-hoc macOS signatures
+        if: matrix.script == 'mac'
+        shell: bash
+        run: |
+          apps=()
+          while IFS= read -r -d '' app; do
+            apps+=("${app}")
+          done < <(find release -type d -name 'Nimlat.app' -prune -print0)
+
+          if (( ${#apps[@]} != 2 )); then
+            echo "Expected two macOS app bundles, found ${#apps[@]}." >&2
+            exit 1
+          fi
+
+          architectures=()
+          for app in "${apps[@]}"; do
+            codesign --verify --deep --strict --verbose=4 "${app}"
+
+            signature_info="$(codesign -dv --verbose=4 "${app}" 2>&1)"
+            if ! grep -Fq 'Signature=adhoc' <<< "${signature_info}"; then
+              echo "Expected an ad-hoc signature for ${app}." >&2
+              echo "${signature_info}" >&2
+              exit 1
+            fi
+
+            architectures+=("$(lipo -archs "${app}/Contents/MacOS/Nimlat")")
+          done
+
+          actual_architectures="$(printf '%s\n' "${architectures[@]}" | sort)"
+          expected_architectures="$(printf '%s\n' arm64 x86_64 | sort)"
+          if [[ "${actual_architectures}" != "${expected_architectures}" ]]; then
+            echo "Unexpected macOS architectures:" >&2
+            echo "${actual_architectures}" >&2
+            exit 1
+          fi
+
+      - name: Upload verified macOS release assets
+        if: matrix.script == 'mac'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_REPO: ${{ github.repository }}
+          RELEASE_TAG: ${{ needs.prepare-release.outputs.tag }}
+          RELEASE_VERSION: ${{ needs.prepare-release.outputs.version }}
+        shell: bash
+        run: |
+          assets=(release/Nimlat-"${RELEASE_VERSION}"-macOS-* release/latest-mac.yml)
+          if (( ${#assets[@]} != 9 )); then
+            echo "Expected nine verified macOS release assets, found ${#assets[@]}." >&2
+            printf '%s\n' "${assets[@]}" >&2
+            exit 1
+          fi
+          gh release upload "${RELEASE_TAG}" "${assets[@]}" --clobber
 
   verify-release:
     name: Verify draft release

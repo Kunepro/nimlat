@@ -65,10 +65,14 @@
 			}
 		],
 		"mac":            {
-			"icon":         "icon.png",
-			"identity":     null,
-			"notarize":     false,
-			"target":       [
+			"icon":                "icon.png",
+			"identity":            "-",
+			"forceCodeSigning":    true,
+			"hardenedRuntime":     true,
+			"entitlements":        "tools/packaging/entitlements.mac.plist",
+			"entitlementsInherit": "tools/packaging/entitlements.mac.plist",
+			"notarize":            false,
+			"target":              [
 				{
 					"target": "dmg",
 					"arch":   [
@@ -84,8 +88,8 @@
 					]
 				}
 			],
-			"category":     "public.app-category.entertainment",
-			"artifactName": "${productName}-${version}-macOS-${arch}.${ext}"
+			"category":            "public.app-category.entertainment",
+			"artifactName":        "${productName}-${version}-macOS-${arch}.${ext}"
 		},
 		"linux":          {
 			"icon":         "icon.png",
