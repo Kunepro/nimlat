@@ -41,7 +41,7 @@
 			"target":         "nsis",
 			"icon":           "icon.png",
 			"signExecutable": false,
-			"artifactName":   "${productName}-${version}-Windows-${arch}-Setup.${ext}"
+			"artifactName":   "${productName}-${version}-Windows-${arch}.${ext}"
 		},
 		"files":          [
 			"dist/**/*",
