@@ -158,9 +158,10 @@ deterministic doubles.
 dependencies respectively. Scripts prefixed with `internal:` are implementation details composed by the public commands
 above.
 
-Maintainers can run **Build x64 installers** from the repository's GitHub Actions page. The manual workflow builds on
-native Windows, Linux, and Intel macOS runners, then exposes the NSIS installer, AppImage, DMG, and macOS ZIP as
-30-day workflow artifacts. It never publishes or modifies a GitHub Release.
+Maintainers can run **Build draft release** from the repository's GitHub Actions page. The manual workflow accepts only
+`master`, derives `v<version>` from `package.json`, and creates or updates a GitHub Draft Release. It builds Windows x64,
+Linux x64, and separate macOS x64 and ARM64 packages, uploads release assets and updater metadata directly, then verifies
+the draft. No temporary GitHub Actions artifacts are stored; publishing the verified draft remains a manual action.
 
 ## Architecture
 
