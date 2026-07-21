@@ -161,7 +161,9 @@ above.
 Maintainers can run **Build draft release** from the repository's GitHub Actions page. The manual workflow accepts only
 `master`, derives `v<version>` from `package.json`, and creates or updates a GitHub Draft Release. It builds Windows x64,
 Linux x64, and separate macOS x64 and ARM64 packages, uploads release assets and updater metadata directly, then verifies
-the draft. No temporary GitHub Actions artifacts are stored; publishing the verified draft remains a manual action.
+the draft. Installer filenames include the target operating system, and the release notes label Apple Silicon, Intel,
+Windows, Linux, and updater-only files explicitly. No temporary GitHub Actions artifacts are stored; publishing the
+verified draft remains a manual action.
 
 ## Architecture
 

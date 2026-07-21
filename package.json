@@ -41,7 +41,7 @@
 			"target":         "nsis",
 			"icon":           "icon.png",
 			"signExecutable": false,
-			"artifactName":   "${productName}-${version}-${arch}.${ext}"
+			"artifactName":   "${productName}-${version}-Windows-${arch}-Setup.${ext}"
 		},
 		"files":          [
 			"dist/**/*",
@@ -85,7 +85,7 @@
 				}
 			],
 			"category":     "public.app-category.entertainment",
-			"artifactName": "${productName}-${version}-${arch}.${ext}"
+			"artifactName": "${productName}-${version}-macOS-${arch}.${ext}"
 		},
 		"linux":          {
 			"icon":         "icon.png",
@@ -93,7 +93,7 @@
 				"AppImage"
 			],
 			"category":     "AudioVideo",
-			"artifactName": "${productName}-${version}-${arch}.${ext}"
+			"artifactName": "${productName}-${version}-Linux-${arch}.${ext}"
 		}
 	},
 	"overrides":       {
