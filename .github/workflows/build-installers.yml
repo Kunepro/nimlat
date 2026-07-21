@@ -140,7 +140,9 @@ jobs:
     timeout-minutes: 5
 
     permissions:
-      contents: read
+      # GitHub hides draft releases from read-only tokens, so write scope is
+      # required even though every command in this job is read-only.
+      contents: write
 
     env:
       GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
