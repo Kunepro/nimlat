@@ -158,6 +158,10 @@ deterministic doubles.
 dependencies respectively. Scripts prefixed with `internal:` are implementation details composed by the public commands
 above.
 
+Maintainers can run **Build x64 installers** from the repository's GitHub Actions page. The manual workflow builds on
+native Windows, Linux, and Intel macOS runners, then exposes the NSIS installer, AppImage, DMG, and macOS ZIP as
+30-day workflow artifacts. It never publishes or modifies a GitHub Release.
+
 ## Architecture
 
 Nimlat follows Electron's process isolation model. The renderer never receives direct access to Electron or SQLite APIs.

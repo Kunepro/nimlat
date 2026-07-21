@@ -1,0 +1,74 @@
+name: Build x64 installers
+run-name: Build x64 installers from ${{ github.ref_name }}
+
+on:
+  workflow_dispatch:
+
+# Packaging reads the selected ref and stores workflow artifacts; it never publishes a release.
+permissions:
+  contents: read
+
+# Avoid competing native dependency rebuilds for the same ref while preserving every manual run.
+concurrency:
+  group: build-x64-installers-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  package:
+    name: ${{ matrix.label }}
+    runs-on: ${{ matrix.runner }}
+    timeout-minutes: 45
+
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - label: Windows x64 (NSIS)
+            runner: windows-2025
+            script: win
+            artifact-name: nimlat-windows-x64
+            artifact-path: release/*.exe
+          - label: Linux x64 (AppImage)
+            runner: ubuntu-24.04
+            script: linux
+            artifact-name: nimlat-linux-x64
+            artifact-path: release/*.AppImage
+          - label: macOS x64 (DMG and ZIP)
+            runner: macos-15-intel
+            script: mac
+            artifact-name: nimlat-macos-x64
+            artifact-path: |
+              release/*.dmg
+              release/*.zip
+
+    env:
+      CI: true
+
+    steps:
+      - name: Check out source
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - name: Set up Node.js
+        uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+        with:
+          node-version: 24
+          architecture: x64
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      # Native modules are rebuilt on their target OS; --x64 prevents configured secondary arches.
+      - name: Package installer
+        run: npm run package:${{ matrix.script }} -- --x64 --publish never
+
+      - name: Upload installer artifact
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: ${{ matrix.artifact-name }}
+          path: ${{ matrix.artifact-path }}
+          if-no-files-found: error
+          retention-days: 30
+          compression-level: 0
