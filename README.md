@@ -160,11 +160,11 @@ above.
 
 Maintainers can run **Build draft release** from the repository's GitHub Actions page. The manual workflow accepts only
 `master`, derives `v<version>` from `package.json`, and creates or updates a GitHub Draft Release. It builds Windows x64,
-Linux x64, and separate macOS x64 and ARM64 packages, uploads release assets and updater metadata directly, then verifies
-the draft. Installer filenames include the target operating system. macOS packages use an ad-hoc code signature so they
-can be built without a paid Apple Developer membership; because they are not notarized, users must explicitly approve
-Nimlat in macOS Privacy & Security on first launch. No temporary GitHub Actions artifacts are stored; publishing the
-verified draft remains a manual action.
+Linux x64, and separate macOS x64 and ARM64 DMGs, uploads updater metadata only for supported platforms, then verifies the
+draft. Installer filenames include the target operating system. macOS packages use an ad-hoc code signature so they can
+be built without a paid Apple Developer membership; because they are not notarized, users must explicitly approve Nimlat
+in macOS Privacy & Security on first launch and install future macOS releases manually. No temporary GitHub Actions
+artifacts are stored; publishing the verified draft remains a manual action.
 
 ## Architecture
 

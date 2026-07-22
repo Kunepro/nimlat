@@ -13,8 +13,8 @@ const isIntegratedUpdaterVisible = process.platform !== "darwin";
 
 export const appUpdateApi = {
 	appUpdate: {
-		// macOS releases are intentionally unsigned, so the renderer must not advertise an integrated update flow that
-		// cannot install those builds reliably. The IPC methods remain available; this capability controls presentation only.
+		// macOS releases use per-build ad-hoc signatures, which cannot satisfy Squirrel.Mac's cross-version signature check.
+		// The IPC methods remain available; this capability prevents the renderer from advertising an unusable install flow.
 		isIntegratedUpdaterVisible: (): boolean => isIntegratedUpdaterVisible,
 		getStatus:                  (): Promise<AppUpdateStatus> => ipcRenderer.invoke(
 			IpcChannels.AppUpdateStatusGet,
