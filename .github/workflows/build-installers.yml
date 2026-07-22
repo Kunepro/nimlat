@@ -99,8 +99,8 @@ jobs:
             script: linux
             node-architecture: x64
             args: --x64
-          # One invocation keeps x64 and ARM64 update metadata consistent in latest-mac.yml.
-          - label: macOS x64 and ARM64 (DMG and ZIP)
+          # macOS updates are manual because ad-hoc signatures cannot satisfy Squirrel.Mac across builds.
+          - label: macOS x64 and ARM64 (DMG)
             runner: macos-15-intel
             script: mac
             node-architecture: x64
@@ -185,12 +185,18 @@ jobs:
           RELEASE_VERSION: ${{ needs.prepare-release.outputs.version }}
         shell: bash
         run: |
-          assets=(release/Nimlat-"${RELEASE_VERSION}"-macOS-* release/latest-mac.yml)
-          if (( ${#assets[@]} != 9 )); then
-            echo "Expected nine verified macOS release assets, found ${#assets[@]}." >&2
-            printf '%s\n' "${assets[@]}" >&2
-            exit 1
-          fi
+          # Only the human-facing DMGs belong in the release. ZIPs, blockmaps, and
+          # latest-mac.yml exclusively support the unavailable Squirrel.Mac flow.
+          assets=(
+            "release/Nimlat-${RELEASE_VERSION}-macOS-arm64.dmg"
+            "release/Nimlat-${RELEASE_VERSION}-macOS-x64.dmg"
+          )
+          for asset in "${assets[@]}"; do
+            if [[ ! -f "${asset}" ]]; then
+              echo "Missing verified macOS release asset: ${asset}" >&2
+              exit 1
+            fi
+          done
           gh release upload "${RELEASE_TAG}" "${assets[@]}" --clobber
 
   verify-release:
@@ -228,16 +234,9 @@ jobs:
             "Nimlat-${RELEASE_VERSION}-Windows-x64.exe.blockmap"
             "Nimlat-${RELEASE_VERSION}-Linux-x86_64.AppImage"
             "Nimlat-${RELEASE_VERSION}-macOS-x64.dmg"
-            "Nimlat-${RELEASE_VERSION}-macOS-x64.dmg.blockmap"
-            "Nimlat-${RELEASE_VERSION}-macOS-x64.zip"
-            "Nimlat-${RELEASE_VERSION}-macOS-x64.zip.blockmap"
             "Nimlat-${RELEASE_VERSION}-macOS-arm64.dmg"
-            "Nimlat-${RELEASE_VERSION}-macOS-arm64.dmg.blockmap"
-            "Nimlat-${RELEASE_VERSION}-macOS-arm64.zip"
-            "Nimlat-${RELEASE_VERSION}-macOS-arm64.zip.blockmap"
             "latest.yml"
             "latest-linux.yml"
-            "latest-mac.yml"
           )
 
           missing=0
@@ -300,12 +299,33 @@ jobs:
             "Nimlat-${RELEASE_VERSION}-x64.dmg.blockmap"
             "Nimlat-${RELEASE_VERSION}-x64.zip"
             "Nimlat-${RELEASE_VERSION}-x64.zip.blockmap"
+            # These files supported Squirrel.Mac and must not clutter a manual-download release.
+            "Nimlat-${RELEASE_VERSION}-macOS-arm64.dmg.blockmap"
+            "Nimlat-${RELEASE_VERSION}-macOS-arm64.zip"
+            "Nimlat-${RELEASE_VERSION}-macOS-arm64.zip.blockmap"
+            "Nimlat-${RELEASE_VERSION}-macOS-x64.dmg.blockmap"
+            "Nimlat-${RELEASE_VERSION}-macOS-x64.zip"
+            "Nimlat-${RELEASE_VERSION}-macOS-x64.zip.blockmap"
+            "latest-mac.yml"
           )
           for asset in "${legacy_assets[@]}"; do
             if grep -Fxq "${asset}" <<< "${asset_names}"; then
               gh release delete-asset "${RELEASE_TAG}" "${asset}" --yes
             fi
           done
+
+          # Fail closed if a packaging change starts publishing anything outside the reviewed public asset set.
+          final_asset_names="$(gh release view "${RELEASE_TAG}" --json assets --jq '.assets[].name')"
+          unexpected=0
+          while IFS= read -r asset; do
+            if [[ -n "${asset}" ]] && ! printf '%s\n' "${expected_assets[@]}" | grep -Fxq "${asset}"; then
+              echo "Unexpected draft release asset: ${asset}" >&2
+              unexpected=1
+            fi
+          done <<< "${final_asset_names}"
+          if (( unexpected != 0 )); then
+            exit 1
+          fi
 
           release_url="$(gh release view "${RELEASE_TAG}" --json url --jq '.url')"
           {
